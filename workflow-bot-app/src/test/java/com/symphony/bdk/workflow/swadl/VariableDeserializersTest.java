@@ -59,12 +59,14 @@ class VariableDeserializersTest {
 
   @Test
   void listOfVariables() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"listField\": [\n"
-        + "    \"${variables.aVar}\"\n"
-        + "  ]\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "listField": [
+            "${variables.aVar}"
+          ]
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -79,11 +81,13 @@ class VariableDeserializersTest {
 
   @Test
   void listAsVariable() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"listField\": "
-        + "\"${variables.aVar}\"\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "listField": \
+        "${variables.aVar}"
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -98,12 +102,14 @@ class VariableDeserializersTest {
 
   @Test
   void simpleList() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"listField\": [\n"
-        + "    \"ABC\"\n"
-        + "  ]\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "listField": [
+            "ABC"
+          ]
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties");
@@ -115,12 +121,14 @@ class VariableDeserializersTest {
 
   @Test
   void mapOfVariables() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"mapField\": {\n"
-        + "    \"entry\": \"${variables.aVar}\"\n"
-        + "  }\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "mapField": {
+            "entry": "${variables.aVar}"
+          }
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -135,11 +143,13 @@ class VariableDeserializersTest {
 
   @Test
   void mapAsVariable() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"mapField\": "
-        + "\"${variables.aVar}\"\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "mapField": \
+        "${variables.aVar}"
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -154,11 +164,13 @@ class VariableDeserializersTest {
 
   @Test
   void longAsVariable() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"longField\": "
-        + "\"${variables.aVar}\"\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "longField": \
+        "${variables.aVar}"
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -173,10 +185,12 @@ class VariableDeserializersTest {
 
   @Test
   void longAsValue() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"longField\": 123\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "longField": 123
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -189,11 +203,13 @@ class VariableDeserializersTest {
 
   @Test
   void booleanAsVariable() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"boolField\": "
-        + "\"${variables.aVar}\"\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "boolField": \
+        "${variables.aVar}"
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -208,10 +224,12 @@ class VariableDeserializersTest {
 
   @Test
   void booleanAsValue() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"boolField\": true\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "boolField": true
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -224,11 +242,13 @@ class VariableDeserializersTest {
 
   @Test
   void stringAsVariable() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"stringField\": "
-        + "\"${variables.aVar}\"\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "stringField": \
+        "${variables.aVar}"
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")
@@ -243,10 +263,12 @@ class VariableDeserializersTest {
 
   @Test
   void stringAsValue() throws JsonProcessingException {
-    VariableActivity swadlModel = swadlToModelMapper.readValue("{\n"
-        + "  \"id\": \"123\",\n"
-        + "  \"stringField\": \"value\"\n"
-        + "}", VariableActivity.class);
+    VariableActivity swadlModel = swadlToModelMapper.readValue("""
+        {
+          "id": "123",
+          "stringField": "value"
+        }\
+        """, VariableActivity.class);
 
     String swadlModelInBpmn = bpmnToModelMapper.writeValueAsString(swadlModel);
     assertThat(swadlModelInBpmn).doesNotContain("variableProperties")

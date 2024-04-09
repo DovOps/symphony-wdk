@@ -365,7 +365,7 @@ public abstract class IntegrationTest {
     List<HistoricProcessInstance> processes = historyService.createHistoricProcessInstanceQuery()
         .processInstanceId(processId).list();
     if (!processes.isEmpty()) {
-      HistoricProcessInstance processInstance = processes.get(0);
+      HistoricProcessInstance processInstance = processes.getFirst();
       return processInstance.getState().equals("COMPLETED");
     }
     return false;
@@ -390,7 +390,7 @@ public abstract class IntegrationTest {
     if (processes.isEmpty()) {
       return Optional.empty();
     } else {
-      return Optional.ofNullable(processes.get(0))
+      return Optional.ofNullable(processes.getFirst())
           .map(HistoricProcessInstance::getId);
     }
   }
@@ -403,7 +403,7 @@ public abstract class IntegrationTest {
     if (processes.isEmpty()) {
       return Optional.empty();
     } else {
-      return Optional.ofNullable(processes.get(0))
+      return Optional.ofNullable(processes.getFirst())
           .map(HistoricProcessInstance::getId);
     }
   }

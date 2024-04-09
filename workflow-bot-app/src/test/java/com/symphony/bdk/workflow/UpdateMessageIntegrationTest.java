@@ -46,8 +46,8 @@ class UpdateMessageIntegrationTest extends IntegrationTest {
     engine.onEvent(messageReceived("/update-valid-message"));
 
     Assertions.assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUT_MESSAGE_ID_KEY, "updateMessage"), msgId)
-        .hasOutput(String.format(OUTPUT_MESSAGE_KEY, "updateMessage"), updatedMessage);
+        .hasOutput(OUTPUT_MESSAGE_ID_KEY.formatted("updateMessage"), msgId)
+        .hasOutput(OUTPUT_MESSAGE_KEY.formatted("updateMessage"), updatedMessage);
 
     ArgumentCaptor<Message> messageArgumentCaptor = ArgumentCaptor.forClass(Message.class);
     verify(messageService, times(1)).update(eq(message), messageArgumentCaptor.capture());
@@ -75,8 +75,8 @@ class UpdateMessageIntegrationTest extends IntegrationTest {
     engine.onEvent(messageReceived("/update"));
 
     Assertions.assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUT_MESSAGE_ID_KEY, "updateMessage"), msgId)
-        .hasOutput(String.format(OUTPUT_MESSAGE_KEY, "updateMessage"), updatedMessage);
+        .hasOutput(OUTPUT_MESSAGE_ID_KEY.formatted("updateMessage"), msgId)
+        .hasOutput(OUTPUT_MESSAGE_KEY.formatted("updateMessage"), updatedMessage);
 
     ArgumentCaptor<Message> messageArgumentCaptor = ArgumentCaptor.forClass(Message.class);
     verify(messageService, times(1)).update(eq(message), messageArgumentCaptor.capture());

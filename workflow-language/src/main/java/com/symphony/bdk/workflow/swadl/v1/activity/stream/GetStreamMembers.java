@@ -2,10 +2,9 @@ package com.symphony.bdk.workflow.swadl.v1.activity.stream;
 
 import com.symphony.bdk.workflow.swadl.v1.activity.BaseActivity;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import javax.annotation.Nullable;
 
 /**
  * @see <a href="https://developers.symphony.com/restapi/reference#stream-members">Get stream members API</a>

@@ -61,8 +61,8 @@ public final class WorkflowDebugger {
       // uses https://github.com/bpmn-io/bpmn-to-image
       File pngFile = new File(outputFolder, workflowName + ".png");
       Runtime.getRuntime().exec(
-          String.format("bpmn-to-image --title %s-%s %s:%s",
-              workflowName, Instant.now(), bpmnFile, pngFile));
+          "bpmn-to-image --title %s-%s %s:%s".formatted(
+              workflowName, Instant.now(), bpmnFile, pngFile).split(" "));
       log.debug("BPMN image generated to {}", pngFile);
       return pngFile;
     } catch (IOException ioException) {

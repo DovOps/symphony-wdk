@@ -35,20 +35,22 @@ public class WorkflowEventVariableActionTest {
 
   @InjectMocks WorkflowEventVariableAction eventVariableAction;
 
-  private static final String EVENT_HOLDER_STRING = "{\"initiator\":{\"user\":{\"userId\":123,"
-      + "\"firstName\":\"firstName\",\"lastName\":\"lastName\",\"displayName\":\"displayName\","
-      + "\"email\":\"email@email.com\",\"username\":\"username\"}},"
-      + "\"source\":{\"@eventImpl\":\"com.symphony.bdk.gen.api.model.V4MessageSent\","
-      + "\"message\":{\"messageId\":\"MSG_ID\",\"parentMessageId\":null,\"timestamp\":1672825563000,"
-      + "\"message\":\"<div data-format=\\\"PresentationML\\\" data-version=\\\"2.0\\\" class=\\\"wysiwyg\\\">"
-      + "<p>/form</p></div>\",\"sharedMessage\":null,\"data\":\"{}\",\"attachments\":null,"
-      + "\"user\":{\"userId\":123,\"firstName\":\"firstName\",\"lastName\":\"lastName\","
-      + "\"displayName\":\"displayName\",\"email\":\"email@email.com\",\"username\":\"username\"},"
-      + "\"stream\":{\"streamId\":\"STREAM_ID\",\"streamType\":\"IM\",\"roomName\":null,\"members\":null,"
-      + "\"external\":null,\"crossPod\":null},\"externalRecipients\":false,\"diagnostic\":null,"
-      + "\"userAgent\":\"AGENT_USER\",\"originalFormat\":\"com.symphony.messageml.v2\","
-      + "\"disclaimer\":null,\"sid\":\"SID\",\"replacing\":null,\"replacedBy\":null,"
-      + "\"initialTimestamp\":0,\"initialMessageId\":null,\"silent\":null}},\"args\":{\"eventName\":\"EVENT_NAME\"}}";
+  private static final String EVENT_HOLDER_STRING = """
+      {"initiator":{"user":{"userId":123,\
+      "firstName":"firstName","lastName":"lastName","displayName":"displayName",\
+      "email":"email@email.com","username":"username"}},\
+      "source":{"@eventImpl":"com.symphony.bdk.gen.api.model.V4MessageSent",\
+      "message":{"messageId":"MSG_ID","parentMessageId":null,"timestamp":1672825563000,\
+      "message":"<div data-format=\\"PresentationML\\" data-version=\\"2.0\\" class=\\"wysiwyg\\">\
+      <p>/form</p></div>","sharedMessage":null,"data":"{}","attachments":null,\
+      "user":{"userId":123,"firstName":"firstName","lastName":"lastName",\
+      "displayName":"displayName","email":"email@email.com","username":"username"},\
+      "stream":{"streamId":"STREAM_ID","streamType":"IM","roomName":null,"members":null,\
+      "external":null,"crossPod":null},"externalRecipients":false,"diagnostic":null,\
+      "userAgent":"AGENT_USER","originalFormat":"com.symphony.messageml.v2",\
+      "disclaimer":null,"sid":"SID","replacing":null,"replacedBy":null,\
+      "initialTimestamp":0,"initialMessageId":null,"silent":null}},"args":{"eventName":"EVENT_NAME"}}\
+      """;
 
   @Test
   void executeTest() {

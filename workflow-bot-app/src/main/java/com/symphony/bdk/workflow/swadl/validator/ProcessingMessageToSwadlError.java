@@ -81,18 +81,18 @@ public class ProcessingMessageToSwadlError {
   private static String toErrorMessage(JsonNode errorNode, String erroredProperty, String errorType,
       JsonNode yamlTree, String message) {
     if (errorType.equals("additionalProperties")) {
-      return String.format("Unknown property %s",
+      return "Unknown property %s".formatted(
           StringUtils.wrapIfMissing(errorNode.at("/unwanted/0").asText(), "'"));
     }
 
     if (errorType.equals("required")) {
-      return String.format("Missing property %s for %s object",
+      return "Missing property %s for %s object".formatted(
           StringUtils.wrapIfMissing(errorNode.at("/missing/0").asText(), "'"),
           erroredProperty);
     }
 
     if (errorType.equals("pattern")) {
-      return String.format("Invalid property %s, must match pattern %s",
+      return "Invalid property %s, must match pattern %s".formatted(
           StringUtils.wrapIfMissing(erroredProperty, "'"),
           errorNode.path("regex").asText());
     }
@@ -104,7 +104,7 @@ public class ProcessingMessageToSwadlError {
         erroredProperty = at.asText();
       }
 
-      return String.format("Invalid property %s, expecting %s type, got %s",
+      return "Invalid property %s, expecting %s type, got %s".formatted(
           StringUtils.wrapIfMissing(erroredProperty, "'"),
           errorNode.at("/expected/0").asText(), errorNode.at("/found").asText());
     }
@@ -115,7 +115,7 @@ public class ProcessingMessageToSwadlError {
       if (at.isObject()) {
         property = at.fieldNames().next();
       }
-      return String.format("Unknown property %s for %s object",
+      return "Unknown property %s for %s object".formatted(
           StringUtils.wrapIfMissing(property, "'"), erroredProperty);
     }
 

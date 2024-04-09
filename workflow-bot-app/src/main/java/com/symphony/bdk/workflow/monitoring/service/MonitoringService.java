@@ -27,6 +27,7 @@ import com.symphony.bdk.workflow.monitoring.repository.domain.ActivityInstanceDo
 import com.symphony.bdk.workflow.monitoring.repository.domain.VariablesDomain;
 import com.symphony.bdk.workflow.monitoring.repository.domain.WorkflowInstanceDomain;
 
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 
 import static com.symphony.bdk.workflow.engine.WorkflowDirectedGraph.NodeChildren;
 
@@ -153,7 +153,7 @@ public class MonitoringService {
 
     if (directGraph == null) {
       throw new NotFoundException(
-          String.format("No workflow with id '%s' and version '%d' is found", workflowId, version));
+          "No workflow with id '%s' and version '%d' is found".formatted(workflowId, version));
     }
     return directGraph;
   }
@@ -204,7 +204,7 @@ public class MonitoringService {
 
     if (instance.isEmpty()) {
       throw new NotFoundException(
-          String.format("Either no workflow deployed with id %s, or %s is not an instance of it", workflowId,
+          "Either no workflow deployed with id %s, or %s is not an instance of it".formatted(workflowId,
               instanceId));
     }
     return instance.get();

@@ -30,8 +30,8 @@ public class FormRepliedNodeBuilder extends AbstractNodeBpmnBuilder {
   public AbstractFlowNodeBuilder<?, ?> build(WorkflowNode element, String parentId,
       AbstractFlowNodeBuilder<?, ?> builder, BuildProcessContext context) {
     if (builder instanceof ParallelGatewayBuilder || element.getEvent().getFormReplied().getExclusive()) {
-      if (builder instanceof StartEventBuilder) {
-        return ((StartEventBuilder) builder).camundaExecutionListenerClass(ExecutionListener.EVENTNAME_START,
+      if (builder instanceof StartEventBuilder eventBuilder) {
+        return eventBuilder.camundaExecutionListenerClass(ExecutionListener.EVENTNAME_START,
                 FormVariableListener.class)
             .camundaAsyncBefore()
             .name(element.getEventId())

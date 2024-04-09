@@ -2,11 +2,11 @@ package com.symphony.bdk.workflow.swadl.v1.activity.user;
 
 import com.symphony.bdk.workflow.swadl.v1.activity.OboActivity;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
-import javax.annotation.Nullable;
 
 /**
  * @see <a href="https://developers.symphony.com/restapi/reference#users-lookup-v3">Search users API</a>

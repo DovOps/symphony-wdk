@@ -1,8 +1,9 @@
 package com.symphony.bdk.workflow.engine.executor;
 
+import jakarta.annotation.Nullable;
+
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
-import javax.annotation.Nullable;
 
 public final class DateTimeUtils {
 

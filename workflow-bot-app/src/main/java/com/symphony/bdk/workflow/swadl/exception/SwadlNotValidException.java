@@ -19,12 +19,12 @@ public class SwadlNotValidException extends IOException {
   transient List<SwadlError> errors;
 
   public SwadlNotValidException(List<SwadlError> errors, String fullDetails) {
-    super(String.format("SWADL content is not valid: %s, full details: %s", errors, fullDetails));
+    super("SWADL content is not valid: %s, full details: %s".formatted(errors, fullDetails));
     this.errors = errors;
   }
 
   public SwadlNotValidException(JsonProcessingException exception) {
-    super(String.format("SWADL content is not valid YAML at line %d, full details: %s",
+    super("SWADL content is not valid YAML at line %d, full details: %s".formatted(
         exception.getLocation().getLineNr(), exception.getMessage()));
     this.errors =
         Collections.singletonList(new SwadlError(exception.getLocation().getLineNr(), exception.getMessage()));

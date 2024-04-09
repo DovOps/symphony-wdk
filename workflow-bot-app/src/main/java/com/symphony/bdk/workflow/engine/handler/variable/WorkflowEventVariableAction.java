@@ -37,8 +37,8 @@ public class WorkflowEventVariableAction implements HistoricEventAction {
 
   @Override
   public void execute(HistoryEvent historyEvent) {
-    if (historyEvent instanceof HistoricVariableUpdateEventEntity) {
-      this.storeEventHolderVariable((HistoricVariableUpdateEventEntity) historyEvent);
+    if (historyEvent instanceof HistoricVariableUpdateEventEntity entity) {
+      this.storeEventHolderVariable(entity);
     }
   }
 

@@ -28,8 +28,8 @@ public class SignalNodeBuilder extends AbstractNodeBpmnBuilder {
           .message(element.getId())
           .name(element.getEventId())
           .endEvent().subProcessDone();
-    } else if (builder instanceof AbstractCatchEventBuilder) {
-      builder = ((AbstractCatchEventBuilder<?, ?>) builder).camundaAsyncBefore()
+    } else if (builder instanceof AbstractCatchEventBuilder eventBuilder) {
+      builder = eventBuilder.camundaAsyncBefore()
           .signal(element.getId())
           .name(element.getEventId());
     } else {

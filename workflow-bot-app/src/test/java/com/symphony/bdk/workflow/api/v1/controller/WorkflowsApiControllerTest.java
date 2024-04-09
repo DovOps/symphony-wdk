@@ -151,7 +151,7 @@ class WorkflowsApiControllerTest extends ApiTest {
         Arrays.asList(instanceView1, instanceView2));
 
     mockMvc.perform(
-            request(HttpMethod.GET, String.format(LIST_WORKFLOW_INSTANCES_PATH, "testWorkflowId"))
+            request(HttpMethod.GET, LIST_WORKFLOW_INSTANCES_PATH.formatted("testWorkflowId"))
                 .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE))
         .andExpect(status().isOk())
 
@@ -172,7 +172,7 @@ class WorkflowsApiControllerTest extends ApiTest {
 
   @Test
   void listWorkflowInstances_noTokenProvidedTest() throws Exception {
-    mockMvc.perform(request(HttpMethod.GET, String.format(LIST_WORKFLOW_INSTANCES_PATH, "testWorkflowId")))
+    mockMvc.perform(request(HttpMethod.GET, LIST_WORKFLOW_INSTANCES_PATH.formatted("testWorkflowId")))
         .andExpect(status().isBadRequest());
   }
 
@@ -187,7 +187,7 @@ class WorkflowsApiControllerTest extends ApiTest {
         Arrays.asList(instanceView1, instanceView2));
 
     mockMvc.perform(
-            request(HttpMethod.GET, String.format(LIST_WORKFLOW_INSTANCES_PATH, "testWorkflowId"))
+            request(HttpMethod.GET, LIST_WORKFLOW_INSTANCES_PATH.formatted("testWorkflowId"))
                 .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE).queryParam("version", "1"))
         .andExpect(status().isOk())
 
@@ -237,7 +237,7 @@ class WorkflowsApiControllerTest extends ApiTest {
         any(WorkflowInstLifeCycleFilter.class))).thenReturn(workflowNodesStateView);
 
     mockMvc.perform(
-            request(HttpMethod.GET, String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH, workflowId, instanceId))
+            request(HttpMethod.GET, LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH.formatted(workflowId, instanceId))
                 .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE))
         .andExpect(status().isOk())
 
@@ -270,7 +270,7 @@ class WorkflowsApiControllerTest extends ApiTest {
   @Test
   void listWorkflowInstanceStates_noTokenProvidedTest() throws Exception {
     mockMvc.perform(request(HttpMethod.GET,
-            String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH, "workflowId", "instanceId")))
+            LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH.formatted("workflowId", "instanceId")))
         .andExpect(status().isBadRequest());
   }
 
@@ -279,7 +279,7 @@ class WorkflowsApiControllerTest extends ApiTest {
       "?finished_after=INVALID_INSTANT"})
   void listWorkflowInstanceActivitiesBadQueryParameter(String queryParam) throws Exception {
     mockMvc.perform(request(HttpMethod.GET,
-            String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + queryParam, "workflowId", "instanceId"))
+                (LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + queryParam).formatted("workflowId", "instanceId"))
             .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE))
         .andExpect(status().isBadRequest());
   }
@@ -289,7 +289,7 @@ class WorkflowsApiControllerTest extends ApiTest {
     final String illegalWorkflowId = "testWorkflowId";
     final String illegalInstanceId = "testInstanceId";
     final String errorMsg =
-        String.format("Either no workflow deployed with id '%s' is found or the instance id '%s' is not correct",
+        "Either no workflow deployed with id '%s' is found or the instance id '%s' is not correct".formatted(
             illegalWorkflowId, illegalInstanceId);
 
     when(monitoringService.listWorkflowInstanceNodes(eq(illegalInstanceId), eq(illegalInstanceId),
@@ -297,7 +297,7 @@ class WorkflowsApiControllerTest extends ApiTest {
 
     mockMvc.perform(
             request(HttpMethod.GET,
-                String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH, illegalInstanceId, illegalInstanceId))
+                    LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH.formatted(illegalInstanceId, illegalInstanceId))
                 .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("message").value(errorMsg));
@@ -332,7 +332,7 @@ class WorkflowsApiControllerTest extends ApiTest {
     when(monitoringService.getWorkflowDefinition(eq(workflowId), eq(1L))).thenReturn(workflowNodesView);
 
     mockMvc.perform(
-            request(HttpMethod.GET, String.format(GET_WORKFLOW_DEFINITIONS_PATH, workflowId))
+            request(HttpMethod.GET, GET_WORKFLOW_DEFINITIONS_PATH.formatted(workflowId))
                 .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE).queryParam("version", "1"))
         .andExpect(status().isOk())
 
@@ -361,7 +361,7 @@ class WorkflowsApiControllerTest extends ApiTest {
 
   @Test
   void getWorkflowDefinitions_noTokenProvidedTest() throws Exception {
-    mockMvc.perform(request(HttpMethod.GET, String.format(GET_WORKFLOW_DEFINITIONS_PATH, "workflowId")))
+    mockMvc.perform(request(HttpMethod.GET, GET_WORKFLOW_DEFINITIONS_PATH.formatted("workflowId")))
         .andExpect(status().isBadRequest());
   }
 
@@ -384,7 +384,7 @@ class WorkflowsApiControllerTest extends ApiTest {
         List.of(globalVariableV0, globalVariableV1));
 
     mockMvc.perform(
-            request(HttpMethod.GET, String.format(LIST_WORKFLOW_INSTANCE_GLOBAL_VARS_PATH, workflowId, instanceId))
+            request(HttpMethod.GET, LIST_WORKFLOW_INSTANCE_GLOBAL_VARS_PATH.formatted(workflowId, instanceId))
                 .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE))
         .andExpect(status().isOk())
         .andExpect(jsonPath("[0].outputs[\"globalOne\"]").value("valueOne"))
@@ -398,7 +398,7 @@ class WorkflowsApiControllerTest extends ApiTest {
   @Test
   void listWorkflowInstanceGlobalVariables_noTokenProvidedTest() throws Exception {
     mockMvc.perform(request(HttpMethod.GET,
-            String.format(LIST_WORKFLOW_INSTANCE_GLOBAL_VARS_PATH, "workflowId", "instanceId")))
+            LIST_WORKFLOW_INSTANCE_GLOBAL_VARS_PATH.formatted("workflowId", "instanceId")))
         .andExpect(status().isBadRequest());
   }
 
@@ -406,7 +406,7 @@ class WorkflowsApiControllerTest extends ApiTest {
   @CsvSource({"?updated_before=INVALID", "?updated_after=INVALID"})
   void listWorkflowInstanceGlobalVariablesBadQueryParameter(String queryParam) throws Exception {
     mockMvc.perform(request(HttpMethod.GET,
-            String.format(LIST_WORKFLOW_INSTANCE_GLOBAL_VARS_PATH + queryParam, "workflowId", "instanceId"))
+                (LIST_WORKFLOW_INSTANCE_GLOBAL_VARS_PATH + queryParam).formatted("workflowId", "instanceId"))
             .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE))
         .andExpect(status().isBadRequest());
   }
@@ -414,12 +414,12 @@ class WorkflowsApiControllerTest extends ApiTest {
   @Test
   void listWorkflowActivities_illegalArgument() throws Exception {
     final String illegalWorkflowId = "testWorkflowId";
-    final String errorMsg = String.format("No workflow deployed with id '%s' is found", illegalWorkflowId);
+    final String errorMsg = "No workflow deployed with id '%s' is found".formatted(illegalWorkflowId);
 
     when(monitoringService.getWorkflowDefinition(illegalWorkflowId, null)).thenThrow(new NotFoundException(errorMsg));
 
     mockMvc.perform(
-            request(HttpMethod.GET, String.format(GET_WORKFLOW_DEFINITIONS_PATH, illegalWorkflowId))
+            request(HttpMethod.GET, GET_WORKFLOW_DEFINITIONS_PATH.formatted(illegalWorkflowId))
                 .header("X-Monitoring-Token", MONITORING_TOKEN_VALUE))
         .andExpect(status().isNotFound())
         .andExpect(jsonPath("message").value(errorMsg));

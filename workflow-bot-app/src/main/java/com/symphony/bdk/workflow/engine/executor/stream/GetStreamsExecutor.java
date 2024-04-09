@@ -31,7 +31,7 @@ public class GetStreamsExecutor implements ActivityExecutor<GetStreams> {
       streams = execution.bdk().streams().listStreamsAdmin(toFilter(getStreams));
     } else {
       throw new IllegalArgumentException(
-          String.format("Skip and limit should both be set to get streams %s", getStreams.getId()));
+          "Skip and limit should both be set to get streams %s".formatted(getStreams.getId()));
     }
 
     execution.setOutputVariable(OUTPUTS_STREAMS_KEY, streams);

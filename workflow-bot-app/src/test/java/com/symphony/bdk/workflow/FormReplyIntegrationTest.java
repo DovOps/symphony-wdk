@@ -213,8 +213,10 @@ class FormReplyIntegrationTest extends IntegrationTest {
 
     verify(messageService, timeout(5000)).send(eq("123"), contains("form"));
     assertThat(workflow)
-        .as("The form was sent but the reply activity timed out. "
-            + "Consequently, the activities in the main flow was not executed but the ones in timeout branch were")
+        .as("""
+            The form was sent but the reply activity timed out. \
+            Consequently, the activities in the main flow was not executed but the ones in timeout branch were\
+            """)
         .executed("sendForm", "scriptInTimeoutFlow", "followingScriptInTimeoutFlow")
         .notExecuted("replyWithTimeout", "scriptInMainFlow");
   }

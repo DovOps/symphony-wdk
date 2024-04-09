@@ -64,7 +64,7 @@ public class ApiIntegrationTest extends IntegrationTest {
         }));
 
     ResponseEntity<Object[]> response = restTemplate.getForEntity(
-        String.format(GET_SWADL_BY_ID_URL, port, workflowId, allVersions), Object[].class);
+        GET_SWADL_BY_ID_URL.formatted(port, workflowId, allVersions), Object[].class);
 
     List<Pair<String, Boolean>> responseBodyAsList = new ArrayList<>();
 
@@ -87,7 +87,7 @@ public class ApiIntegrationTest extends IntegrationTest {
     map.add("description", description);
 
     return restTemplate.postForEntity(
-        String.format(VALIDATE_AND_DEPLOY_URL, port), new HttpEntity<>(map, headers), Void.class);
+        VALIDATE_AND_DEPLOY_URL.formatted(port), new HttpEntity<>(map, headers), Void.class);
   }
 
   protected ResponseEntity<Void> validateAndUpdate(String swadl) {
@@ -98,7 +98,7 @@ public class ApiIntegrationTest extends IntegrationTest {
     MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
     requestBody.add("swadl", swadl);
 
-    return restTemplate.exchange(String.format(VALIDATE_AND_UPDATE_URL, port),
+    return restTemplate.exchange(VALIDATE_AND_UPDATE_URL.formatted(port),
         HttpMethod.PUT, new HttpEntity<>(requestBody, headers), Void.class, Collections.emptyList());
   }
 
@@ -107,7 +107,7 @@ public class ApiIntegrationTest extends IntegrationTest {
     headers.setContentType(MediaType.TEXT_PLAIN);
     headers.add(MANAGEMENT_TOKEN_KEY, MANAGEMENT_TOKEN_VALUE);
 
-    return restTemplate.exchange(String.format(SET_ACTIVE_VERSION_URL, port, workflowId, versionToRollback),
+    return restTemplate.exchange(SET_ACTIVE_VERSION_URL.formatted(port, workflowId, versionToRollback),
         HttpMethod.PUT, new HttpEntity<>(headers), Void.class, Collections.emptyList());
   }
 
@@ -121,10 +121,10 @@ public class ApiIntegrationTest extends IntegrationTest {
     headers.add(MANAGEMENT_TOKEN_KEY, MANAGEMENT_TOKEN_VALUE);
 
     if (version == null) {
-      return restTemplate.exchange(String.format(DELETE_SWADL_BY_ID_URL, port, workflowId),
+      return restTemplate.exchange(DELETE_SWADL_BY_ID_URL.formatted(port, workflowId),
           HttpMethod.DELETE, new HttpEntity<>(headers), Void.class);
     } else {
-      return restTemplate.exchange(String.format(DELETE_SWADL_BY_ID_AND_VERSION_URL, port, workflowId, version),
+      return restTemplate.exchange(DELETE_SWADL_BY_ID_AND_VERSION_URL.formatted(port, workflowId, version),
           HttpMethod.DELETE, new HttpEntity<>(headers), Void.class);
     }
   }
@@ -138,7 +138,7 @@ public class ApiIntegrationTest extends IntegrationTest {
         }));
 
     ResponseEntity<WorkflowView[]> response = restTemplate.getForEntity(
-        String.format(LIST_ALL_DEPLOYED_WORKFLOWS_URL, port), WorkflowView[].class);
+        LIST_ALL_DEPLOYED_WORKFLOWS_URL.formatted(port), WorkflowView[].class);
 
     WorkflowView[] body = response.getBody();
     if (body != null) {
@@ -163,9 +163,9 @@ public class ApiIntegrationTest extends IntegrationTest {
     ResponseEntity<WorkflowInstView[]> response;
     if (StringUtils.isBlank(status)) {
       response = restTemplate.getForEntity(
-          String.format(LIST_INSTANCES_URL, port, workflowId), WorkflowInstView[].class, "");
+          LIST_INSTANCES_URL.formatted(port, workflowId), WorkflowInstView[].class, "");
     } else {
-      response = restTemplate.getForEntity(String.format(LIST_INSTANCES_STATUS_URL, port, workflowId, status),
+      response = restTemplate.getForEntity(LIST_INSTANCES_STATUS_URL.formatted(port, workflowId, status),
           WorkflowInstView[].class, "");
     }
 

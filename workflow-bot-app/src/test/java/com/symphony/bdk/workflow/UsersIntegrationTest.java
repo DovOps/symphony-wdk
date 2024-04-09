@@ -143,22 +143,22 @@ class UsersIntegrationTest extends IntegrationTest {
       assertThat(user.getJobFunction()).isEqualTo("Developer");
       assertThat(user.getAssetClasses()).isNotNull();
       assertThat(user.getAssetClasses().size()).isEqualTo(1);
-      assertThat(user.getAssetClasses().get(0)).isEqualTo("Equities");
+      assertThat(user.getAssetClasses().getFirst()).isEqualTo("Equities");
       assertThat(user.getLocation()).isEqualTo("SA");
       assertThat(user.getTitle()).isEqualTo("BackEnd Engineer");
       assertThat(user.getJobFunction()).isEqualTo("Developer");
       assertThat(user.getFunction()).isNotNull();
       assertThat(user.getFunction().size()).isEqualTo(1);
-      assertThat(user.getFunction().get(0)).isEqualTo("Allocation");
+      assertThat(user.getFunction().getFirst()).isEqualTo("Allocation");
       assertThat(user.getIndustries()).isNotNull();
       assertThat(user.getIndustries().size()).isEqualTo(1);
-      assertThat(user.getIndustries().get(0)).isEqualTo("Technology");
+      assertThat(user.getIndustries().getFirst()).isEqualTo("Technology");
       assertThat(user.getInstrument()).isNotNull();
       assertThat(user.getInstrument().size()).isEqualTo(1);
-      assertThat(user.getInstrument().get(0)).isEqualTo("Securities");
+      assertThat(user.getInstrument().getFirst()).isEqualTo("Securities");
       assertThat(user.getResponsibility()).isNotNull();
       assertThat(user.getResponsibility().size()).isEqualTo(1);
-      assertThat(user.getResponsibility().get(0)).isEqualTo("BAU");
+      assertThat(user.getResponsibility().getFirst()).isEqualTo("BAU");
     });
 
     assertThat(workflow).isExecuted();

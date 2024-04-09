@@ -28,8 +28,8 @@ public class ActivityExpiredNodeBuilder extends ActivityNodeBuilder {
       return addTask(builder, element.getActivity());
     }
     String timeout = ((EventWithTimeout) element.getEvent()).getTimeout();
-    if (builder instanceof AbstractCatchEventBuilder) {
-      builder = ((AbstractCatchEventBuilder<?, ?>) builder).timerWithDuration(timeout);
+    if (builder instanceof AbstractCatchEventBuilder eventBuilder) {
+      builder = eventBuilder.timerWithDuration(timeout);
     } else if (builder instanceof AbstractGatewayBuilder) {
       builder = builder.intermediateCatchEvent().name(element.getId()).timerWithDuration(timeout);
     }

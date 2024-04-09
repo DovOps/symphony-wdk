@@ -65,10 +65,10 @@ class SendMessageIntegrationTest extends IntegrationTest {
 
     assertThat(captor.getValue().getData()).contains("id", "123456");
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendMessage1"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendMessage1"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendMessage1"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendMessage1"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendMessage1"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendMessage1"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendMessage1"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendMessage1"), Collections.EMPTY_LIST);
   }
 
   @Test
@@ -90,10 +90,10 @@ class SendMessageIntegrationTest extends IntegrationTest {
     verify(messageService, timeout(5000).times(1)).send(anyString(), any(Message.class));
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendmessageid"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendmessageid"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendmessageid"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendmessageid"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendmessageid"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendmessageid"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendmessageid"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendmessageid"), Collections.EMPTY_LIST);
   }
 
   @Test
@@ -116,14 +116,14 @@ class SendMessageIntegrationTest extends IntegrationTest {
     verify(messageService, timeout(5000)).send(anyString(), messageCaptor.capture());
 
     assertThat(userIdCaptor.getAllValues()).hasSize(1);
-    assertThat(userIdCaptor.getValue().get(0)).isEqualTo(123L);
+    assertThat(userIdCaptor.getValue().getFirst()).isEqualTo(123L);
     assertThat(messageCaptor.getValue().getContent()).isEqualTo(content);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendMessageWithUserId"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendMessageWithUserId"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendMessageWithUserId"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendMessageWithUserId"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendMessageWithUserId"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendMessageWithUserId"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendMessageWithUserId"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendMessageWithUserId"), Collections.EMPTY_LIST);
   }
 
   @ParameterizedTest
@@ -166,17 +166,19 @@ class SendMessageIntegrationTest extends IntegrationTest {
     assertThat(captor.getValue().getContent())
         .isEqualTo("<messageML>Hello world!\n</messageML>");
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendMessageTemplateWithParams"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendMessageTemplateWithParams"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendMessageTemplateWithParams"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendMessageTemplateWithParams"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendMessageTemplateWithParams"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendMessageTemplateWithParams"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendMessageTemplateWithParams"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendMessageTemplateWithParams"), Collections.EMPTY_LIST);
   }
 
   @Test
   @DisplayName(
-      "Given a message with attachments, "
-          + "when I send a new message with the attachment id, "
-          + "this specific file is sent in a new message")
+      """
+      Given a message with attachments, \
+      when I send a new message with the attachment id, \
+      this specific file is sent in a new message\
+      """)
   void sendMessageWithSpecificAttachment() throws Exception {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream(
@@ -210,11 +212,11 @@ class SendMessageIntegrationTest extends IntegrationTest {
     assertMessage(argumentCaptor.getValue(), expectedMessage);
 
     assertThat(workflow).executed("forwardProvidedAttachmentInMessageId")
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "forwardProvidedAttachmentInMessageId"), messageToReturn)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "forwardProvidedAttachmentInMessageId"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("forwardProvidedAttachmentInMessageId"), messageToReturn)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("forwardProvidedAttachmentInMessageId"),
             messageToReturn.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "forwardProvidedAttachmentInMessageId"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "forwardProvidedAttachmentInMessageId"),
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("forwardProvidedAttachmentInMessageId"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("forwardProvidedAttachmentInMessageId"),
             Collections.EMPTY_LIST);
   }
 
@@ -258,8 +260,10 @@ class SendMessageIntegrationTest extends IntegrationTest {
 
   @Test
   @DisplayName(
-      "Given a message with attachments, when I send a new message with multiple attachment ids,"
-          + "then only theses attachments are sent in a new message")
+      """
+      Given a message with attachments, when I send a new message with multiple attachment ids,\
+      then only theses attachments are sent in a new message\
+      """)
   void sendMessageWithMultipleAttachments() throws Exception {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream(
@@ -296,17 +300,19 @@ class SendMessageIntegrationTest extends IntegrationTest {
 
     assertMessage(argumentCaptor.getValue(), expectedMessage);
     assertThat(workflow).executed("forwardMultiple")
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "forwardMultiple"), messageToReturn)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "forwardMultiple"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("forwardMultiple"), messageToReturn)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("forwardMultiple"),
             messageToReturn.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "forwardMultiple"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "forwardMultiple"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("forwardMultiple"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("forwardMultiple"), Collections.EMPTY_LIST);
   }
 
   @Test
   @DisplayName(
-      "Given a message with attachments, when I send a new message without any attachment id,"
-          + "then all message's attachments are sent in a new message")
+      """
+      Given a message with attachments, when I send a new message without any attachment id,\
+      then all message's attachments are sent in a new message\
+      """)
   void sendMessageWithAllAttachments() throws Exception {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream("/message/forward-all-attachments-in-message.swadl.yaml"));
@@ -342,17 +348,19 @@ class SendMessageIntegrationTest extends IntegrationTest {
 
     assertMessage(argumentCaptor.getValue(), expectedMessage);
     assertThat(workflow).executed("forwardAll")
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "forwardAll"), messageToReturn)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "forwardAll"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("forwardAll"), messageToReturn)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("forwardAll"),
             messageToReturn.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "forwardAll"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "forwardAll"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("forwardAll"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("forwardAll"), Collections.EMPTY_LIST);
   }
 
   @Test
   @DisplayName(
-      "Given a local stored file, when I send a new message with the file path,"
-          + "then the file is sent as attachment in a new message")
+      """
+      Given a local stored file, when I send a new message with the file path,\
+      then the file is sent as attachment in a new message\
+      """)
   void sendMessageWithAttachmentsFromFile() throws Exception {
     final Workflow workflow =
         SwadlParser.fromYaml(
@@ -374,11 +382,11 @@ class SendMessageIntegrationTest extends IntegrationTest {
     assertThat(messageSent.getAttachments()).as("The sent message has 2 attachments").hasSize(2);
 
     assertThat(workflow).executed("sendAttachmentFromFileInMessageId")
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendAttachmentFromFileInMessageId"), messageToReturn)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendAttachmentFromFileInMessageId"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendAttachmentFromFileInMessageId"), messageToReturn)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendAttachmentFromFileInMessageId"),
             messageToReturn.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendAttachmentFromFileInMessageId"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendAttachmentFromFileInMessageId"),
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendAttachmentFromFileInMessageId"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendAttachmentFromFileInMessageId"),
             Collections.EMPTY_LIST);
   }
 
@@ -397,11 +405,11 @@ class SendMessageIntegrationTest extends IntegrationTest {
     verify(messageService, timeout(5000)).send(eq(List.of("ABC", "DEF")), any());
 
     assertThat(workflow).executed("sendBlastMessageWithStreamIds")
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendBlastMessageWithStreamIds"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendBlastMessageWithStreamIds"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendBlastMessageWithStreamIds"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendBlastMessageWithStreamIds"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendBlastMessageWithStreamIds"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendBlastMessageWithStreamIds"),
             Collections.singletonList(message))
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendBlastMessageWithStreamIds"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendBlastMessageWithStreamIds"), Collections.EMPTY_LIST);
   }
 
   @Test
@@ -450,12 +458,12 @@ class SendMessageIntegrationTest extends IntegrationTest {
 
     assertThat(captor.getValue().getContent()).isEqualTo("<messageML>hello</messageML>");
     assertThat(workflow).executed("sendBlastMessageWithStreamIds")
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendBlastMessageWithStreamIds"), successfulMessage)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendBlastMessageWithStreamIds"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendBlastMessageWithStreamIds"), successfulMessage)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendBlastMessageWithStreamIds"),
             successfulMessage.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendBlastMessageWithStreamIds"),
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendBlastMessageWithStreamIds"),
             Collections.singletonList(successfulMessage))
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendBlastMessageWithStreamIds"),
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendBlastMessageWithStreamIds"),
             Collections.singletonList("DEF"));
   }
 
@@ -487,18 +495,18 @@ class SendMessageIntegrationTest extends IntegrationTest {
         messageArgumentCaptor.capture());
 
     assertThat(userIdsCaptor.getAllValues()).as("One create method is called by user id").hasSize(2);
-    assertThat(userIdsCaptor.getAllValues().get(0).get(0)).isEqualTo(123L);
-    assertThat(userIdsCaptor.getAllValues().get(1).get(0)).isEqualTo(456L);
+    assertThat(userIdsCaptor.getAllValues().getFirst().getFirst()).isEqualTo(123L);
+    assertThat(userIdsCaptor.getAllValues().get(1).getFirst()).isEqualTo(456L);
 
     assertThat(streamIdsArgumentCaptor.getValue()).hasSameElementsAs(List.of(streamId1, streamId2));
     assertThat(messageArgumentCaptor.getValue().getContent()).isEqualTo(content);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendBlastMessageWithUserIds"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendBlastMessageWithUserIds"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendBlastMessageWithUserIds"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendBlastMessageWithUserIds"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendBlastMessageWithUserIds"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendBlastMessageWithUserIds"),
             Collections.singletonList(message))
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendBlastMessageWithUserIds"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendBlastMessageWithUserIds"), Collections.EMPTY_LIST);
   }
 
   @Test
@@ -531,18 +539,18 @@ class SendMessageIntegrationTest extends IntegrationTest {
         messageArgumentCaptor.capture());
 
     assertThat(userIdsCaptor.getAllValues()).as("One create method is called by user id").hasSize(2);
-    assertThat(userIdsCaptor.getAllValues().get(0).get(0)).isEqualTo(123L);
-    assertThat(userIdsCaptor.getAllValues().get(1).get(0)).isEqualTo(456L);
+    assertThat(userIdsCaptor.getAllValues().getFirst().getFirst()).isEqualTo(123L);
+    assertThat(userIdsCaptor.getAllValues().get(1).getFirst()).isEqualTo(456L);
 
     assertThat(streamIdsArgumentCaptor.getValue()).hasSameElementsAs(List.of(streamId1, streamId2));
     assertThat(messageArgumentCaptor.getValue().getContent()).isEqualTo(content);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendBlastMessageWithUserIds"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendBlastMessageWithUserIds"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendBlastMessageWithUserIds"),
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendBlastMessageWithUserIds"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendBlastMessageWithUserIds"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendBlastMessageWithUserIds"),
             Collections.singletonList(message))
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendBlastMessageWithUserIds"),
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendBlastMessageWithUserIds"),
             Collections.singletonList(streamId2));
   }
 
@@ -570,8 +578,8 @@ class SendMessageIntegrationTest extends IntegrationTest {
     verify(messageService, timeout(5000).times(1)).send(streamIdsArgumentCaptor.capture(), any());
 
     assertThat(userIdsCaptor.getAllValues()).as("One create method is called by user id").hasSize(2);
-    assertThat(userIdsCaptor.getAllValues().get(0).get(0)).isEqualTo(123L);
-    assertThat(userIdsCaptor.getAllValues().get(1).get(0)).isEqualTo(456L);
+    assertThat(userIdsCaptor.getAllValues().getFirst().getFirst()).isEqualTo(123L);
+    assertThat(userIdsCaptor.getAllValues().get(1).getFirst()).isEqualTo(456L);
 
     assertThat(streamIdsArgumentCaptor.getValue()).hasSameElementsAs(List.of(streamId1, streamId2));
 
@@ -604,15 +612,15 @@ class SendMessageIntegrationTest extends IntegrationTest {
         messageArgumentCaptor.capture());
 
     assertThat(listArgumentCaptor.getAllValues()).as("The create method is called with a list as parameter").hasSize(1);
-    assertThat(listArgumentCaptor.getAllValues().get(0)).isEqualTo(uids);
+    assertThat(listArgumentCaptor.getAllValues().getFirst()).isEqualTo(uids);
     assertThat(stringArgumentCaptor.getValue()).isEqualTo(streamId);
     assertThat(messageArgumentCaptor.getValue().getContent()).isEqualTo(content);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendBlastMessageWithUserIds"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendBlastMessageWithUserIds"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendBlastMessageWithUserIds"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendBlastMessageWithUserIds"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendBlastMessageWithUserIds"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendBlastMessageWithUserIds"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendBlastMessageWithUserIds"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendBlastMessageWithUserIds"), Collections.EMPTY_LIST);
   }
 
   @ParameterizedTest
@@ -633,10 +641,10 @@ class SendMessageIntegrationTest extends IntegrationTest {
     verify(oboMessageService, timeout(5000)).send(anyString(), any(Message.class));
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_MSG_KEY, "sendMessageObo"), message)
-        .hasOutput(String.format(OUTPUTS_MSG_ID_KEY, "sendMessageObo"), message.getMessageId())
-        .hasOutput(String.format(OUTPUTS_MESSAGES_KEY, "sendMessageObo"), Collections.EMPTY_LIST)
-        .hasOutput(String.format(OUTPUTS_FAILED_MESSAGES_KEY, "sendMessageObo"), Collections.EMPTY_LIST);
+        .hasOutput(OUTPUTS_MSG_KEY.formatted("sendMessageObo"), message)
+        .hasOutput(OUTPUTS_MSG_ID_KEY.formatted("sendMessageObo"), message.getMessageId())
+        .hasOutput(OUTPUTS_MESSAGES_KEY.formatted("sendMessageObo"), Collections.EMPTY_LIST)
+        .hasOutput(OUTPUTS_FAILED_MESSAGES_KEY.formatted("sendMessageObo"), Collections.EMPTY_LIST);
   }
 
   @Test

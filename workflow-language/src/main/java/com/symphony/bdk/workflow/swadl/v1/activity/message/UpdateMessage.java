@@ -2,11 +2,11 @@ package com.symphony.bdk.workflow.swadl.v1.activity.message;
 
 import com.symphony.bdk.workflow.swadl.v1.activity.BaseActivity;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Map;
-import javax.annotation.Nullable;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -23,8 +23,8 @@ public class UpdateMessage extends BaseActivity {
       Map<String, String> map = (Map<String, String>) content;
       setTemplate(map.get("template"));
       setTemplatePath(map.get("template-path"));
-    } else if (content instanceof String) {
-      this.content = (String) content;
+    } else if (content instanceof String string) {
+      this.content = string;
     }
   }
 }

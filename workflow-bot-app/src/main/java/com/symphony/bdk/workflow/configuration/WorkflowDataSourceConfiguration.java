@@ -48,8 +48,10 @@ public class WorkflowDataSourceConfiguration {
   @ConditionalOnBean(WorkflowManagementService.class)
   public Object configStateCheck() {
     throw new IllegalStateException(
-        "Workflow folder watcher must be disabled while using workflow management API. "
-            + "Please remove 'wdk.workflows.path' property from the configuration file.");
+        """
+        Workflow folder watcher must be disabled while using workflow management API. \
+        Please remove 'wdk.workflows.path' property from the configuration file.\
+        """);
   }
 
 }

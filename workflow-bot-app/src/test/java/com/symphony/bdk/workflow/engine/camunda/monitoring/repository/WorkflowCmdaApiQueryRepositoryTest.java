@@ -41,8 +41,8 @@ class WorkflowCmdaApiQueryRepositoryTest {
 
     // then
     assertThat(all).hasSize(1);
-    assertThat(all.get(0).getId()).isEqualTo("wf");
-    assertThat(all.get(0).getName()).isEqualTo("workflow");
-    assertThat(all.get(0).getVersion()).isEqualTo(3);
+    assertThat(all.getFirst().getId()).isEqualTo("wf");
+    assertThat(all.getFirst().getName()).isEqualTo("workflow");
+    assertThat(all.getFirst().getVersion()).isEqualTo(3);
   }
 }

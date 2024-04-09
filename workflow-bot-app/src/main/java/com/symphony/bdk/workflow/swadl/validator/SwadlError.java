@@ -10,7 +10,7 @@ public class SwadlError {
   @Override
   public String toString() {
     if (lineNumber >= 0) {
-      return String.format("Line %s: %s", lineNumber, message);
+      return "Line %s: %s".formatted(lineNumber, message);
     } else {
       return message;
     }

@@ -10,3 +10,6 @@ dependencies {
     implementation 'io.freefair.gradle:lombok-plugin:8.4'
     implementation 'com.github.spotbugs.snom:spotbugs-gradle-plugin:5.0.13'
 }
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

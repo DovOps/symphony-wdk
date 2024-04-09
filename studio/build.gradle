@@ -23,3 +23,6 @@ tasks.register('removeExtraLibs', Delete) {
 }
 tasks.removeExtraLibs.dependsOn tasks.customActivityLibs
 tasks.build.dependsOn tasks.removeExtraLibs
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

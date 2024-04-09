@@ -35,7 +35,7 @@ public class WorkflowExpirationService {
         .collect(Collectors.toList());
 
     if (expirationJobs.isEmpty()) {
-      throw new NotFoundException(String.format(WORKFLOW_NOT_EXIST_EXCEPTION_MSG, workflowId));
+      throw new NotFoundException(WORKFLOW_NOT_EXIST_EXCEPTION_MSG.formatted(workflowId));
     }
 
     expirationJobRepository.saveAll(expirationJobs);

@@ -30,7 +30,7 @@ public class UnpinMessageExecutor extends OboExecutor<UnpinMessage, Void>
 
     if (IM.equals(streamType) && this.isObo(activity)) {
       throw new IllegalArgumentException(
-          String.format("Unpin instant message, in activity %s, is not OBO enabled", activity.getId()));
+          "Unpin instant message, in activity %s, is not OBO enabled".formatted(activity.getId()));
     } else if (IM.equals(streamType)) {
       this.unpinInstantMessage(execution, streamId);
     } else if (ROOM.equals(streamType) && this.isObo(activity)) {
@@ -39,7 +39,7 @@ public class UnpinMessageExecutor extends OboExecutor<UnpinMessage, Void>
       this.unpinRoomMessage(execution, streamId);
     } else {
       throw new IllegalArgumentException(
-          String.format("Unable to unpin message in stream type %s in activity %s", streamType,
+          "Unable to unpin message in stream type %s in activity %s".formatted(streamType,
               execution.getActivity().getId()));
     }
   }

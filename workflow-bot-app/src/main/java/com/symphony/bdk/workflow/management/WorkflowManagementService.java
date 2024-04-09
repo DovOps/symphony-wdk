@@ -77,7 +77,7 @@ public class WorkflowManagementService {
     Optional<VersionedWorkflow> latestVersion =
         versionRepository.findTopByWorkflowIdOrderByVersionDesc(workflow.getId());
     if (latestVersion.isEmpty()) {
-      throw new NotFoundException(String.format(WORKFLOW_NOT_EXIST_EXCEPTION_MSG, workflow.getId()));
+      throw new NotFoundException(WORKFLOW_NOT_EXIST_EXCEPTION_MSG.formatted(workflow.getId()));
     }
 
     if (latestVersion.get().getPublished()) {
@@ -143,13 +143,13 @@ public class WorkflowManagementService {
   private VersionedWorkflow validateWorkflowVersion(String workflowId, Long version) {
     Optional<VersionedWorkflow> optionalDeployed = versionRepository.findByWorkflowIdAndVersion(workflowId, version);
     if (optionalDeployed.isEmpty()) {
-      throw new NotFoundException(String.format("Version %s of the workflow %s does not exist.", version, workflowId));
+      throw new NotFoundException("Version %s of the workflow %s does not exist.".formatted(version, workflowId));
     }
 
     VersionedWorkflow deployedWorkflow = optionalDeployed.get();
     if (!deployedWorkflow.getPublished()) {
       throw new IllegalArgumentException(
-          String.format("Version %s of the workflow %s is in draft mode.", version, workflowId));
+          "Version %s of the workflow %s is in draft mode.".formatted(version, workflowId));
     }
     return deployedWorkflow;
   }

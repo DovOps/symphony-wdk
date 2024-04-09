@@ -130,7 +130,7 @@ public class WorkflowAssert extends AbstractAssert<WorkflowAssert, Workflow> {
     if (processes.isEmpty()) {
       return Optional.empty();
     } else {
-      return Optional.ofNullable(processes.get(0))
+      return Optional.ofNullable(processes.getFirst())
           .map(HistoricProcessInstance::getId);
     }
   }
@@ -142,7 +142,7 @@ public class WorkflowAssert extends AbstractAssert<WorkflowAssert, Workflow> {
     if (processes.isEmpty()) {
       return Optional.empty();
     } else {
-      return Optional.ofNullable(processes.get(0))
+      return Optional.ofNullable(processes.getFirst())
           .map(HistoricProcessInstance::getId);
     }
   }
@@ -151,7 +151,7 @@ public class WorkflowAssert extends AbstractAssert<WorkflowAssert, Workflow> {
     List<HistoricProcessInstance> processes = IntegrationTest.historyService.createHistoricProcessInstanceQuery()
         .processInstanceId(processId).list();
     if (!processes.isEmpty()) {
-      HistoricProcessInstance processInstance = processes.get(0);
+      HistoricProcessInstance processInstance = processes.getFirst();
       return processInstance.getState().equals("COMPLETED");
     }
     return false;

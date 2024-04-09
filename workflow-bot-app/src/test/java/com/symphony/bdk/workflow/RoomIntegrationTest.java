@@ -41,8 +41,10 @@ class RoomIntegrationTest extends IntegrationTest {
   private static final String OUTPUT_ROOM_ID_KEY = "%s.outputs.roomId";
 
   @Test
-  @DisplayName("Given create-room activity with only user ids fields, when the message is received, "
-      + "then an MIM is created with the given users")
+  @DisplayName("""
+      Given create-room activity with only user ids fields, when the message is received, \
+      then an MIM is created with the given users\
+      """)
   void createRoomWithUids() throws Exception {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream("/room/create-mim-with-uids.swadl.yaml"));
@@ -57,8 +59,10 @@ class RoomIntegrationTest extends IntegrationTest {
   }
 
   @Test
-  @DisplayName("Given create-room activity with only required room details such as name and description, "
-      + "when the message is received, then a room with the given details is created")
+  @DisplayName("""
+      Given create-room activity with only required room details such as name and description, \
+      when the message is received, then a room with the given details is created\
+      """)
   void createRoomWithDetails() throws Exception {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream("/room/create-room-with-details.swadl.yaml"));
@@ -96,8 +100,10 @@ class RoomIntegrationTest extends IntegrationTest {
   }
 
   @Test
-  @DisplayName("Given create-room activity with uids and required room details, when the message is received,"
-      + "then a room with given details and members is created")
+  @DisplayName("""
+      Given create-room activity with uids and required room details, when the message is received,\
+      then a room with given details and members is created\
+      """)
   void createRoomWithDetailsAndMembers() throws Exception {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream("/room/create-room-with-details-members.swadl.yaml"));
@@ -151,7 +157,7 @@ class RoomIntegrationTest extends IntegrationTest {
     engine.onEvent(messageReceived(command));
     verify(oboStreamService, timeout(5000)).create(uids);
 
-    assertThat(workflow).isExecuted().hasOutput(String.format(OUTPUT_ROOM_ID_KEY, "createRoomObo"), "0000");
+    assertThat(workflow).isExecuted().hasOutput(OUTPUT_ROOM_ID_KEY.formatted("createRoomObo"), "0000");
   }
 
   @ParameterizedTest
@@ -199,8 +205,10 @@ class RoomIntegrationTest extends IntegrationTest {
   @ParameterizedTest
   @CsvSource({
       "/room/obo/create-room-with-details-members-obo-userid.swadl.yaml, /create-mim-details-members-obo-userid",
-      "/room/obo/create-room-with-details-members-obo-username.swadl.yaml, "
-          + "/create-mim-details-members-obo-username"})
+      """
+      /room/obo/create-room-with-details-members-obo-username.swadl.yaml, \
+      /create-mim-details-members-obo-username\
+      """})
   void createRoomWithDetailsAndMembersObo(String workflowFile, String messageContent) throws Exception {
     final Workflow workflow = SwadlParser.fromYaml(getClass().getResourceAsStream(workflowFile));
     final String roomName = "The best room ever";

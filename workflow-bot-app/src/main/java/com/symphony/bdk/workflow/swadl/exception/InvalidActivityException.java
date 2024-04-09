@@ -5,6 +5,6 @@ package com.symphony.bdk.workflow.swadl.exception;
  */
 public class InvalidActivityException extends RuntimeException {
   public InvalidActivityException(String workflowId, String message) {
-    super(String.format("Invalid activity in the workflow %s: %s", workflowId, message));
+    super("Invalid activity in the workflow %s: %s".formatted(workflowId, message));
   }
 }

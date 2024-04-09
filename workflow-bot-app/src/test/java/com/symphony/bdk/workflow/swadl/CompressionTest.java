@@ -12,24 +12,26 @@ public class CompressionTest {
 
   @Test
   void compressString() throws IOException {
-    String inputString = "id: my-workflow\n"
-        + "\n"
-        + "activities:\n"
-        + "  - send-message:\n"
-        + "      id: counter\n"
-        + "      on:\n"
-        + "        message-received:\n"
-        + "          content: /count\n"
-        + "      content: \"version1\"\n"
-        + "  - execute-script:\n"
-        + "      id: vars\n"
-        + "      script: |\n"
-        + "        counter = wdk.readShared('test', 'counter')\n"
-        + "        counter++\n"
-        + "        wdk.writeShared('test', 'counter', counter)\n"
-        + "  - send-message:\n"
-        + "      id: send_counter\n"
-        + "      content: ${readShared('test', 'counter')}\n";
+    String inputString = """
+        id: my-workflow
+        
+        activities:
+          - send-message:
+              id: counter
+              on:
+                message-received:
+                  content: /count
+              content: "version1"
+          - execute-script:
+              id: vars
+              script: |
+                counter = wdk.readShared('test', 'counter')
+                counter++
+                wdk.writeShared('test', 'counter', counter)
+          - send-message:
+              id: send_counter
+              content: ${readShared('test', 'counter')}
+        """;
 
     BigStringCompressor compressor = new BigStringCompressor();
     byte[] converted = compressor.convertToDatabaseColumn(inputString);

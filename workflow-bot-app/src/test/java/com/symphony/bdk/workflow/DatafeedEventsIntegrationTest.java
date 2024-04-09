@@ -199,28 +199,30 @@ class DatafeedEventsIntegrationTest extends IntegrationTest {
 
     engine.deploy(workflow);
     RealTimeEvent<V4MessageSent> event = messageReceived("abc", "/go #awesome #super");
-    event.getSource().getMessage().data("{\n"
-        + "  \"0\": {\n"
-        + "    \"id\": [\n"
-        + "      {\n"
-        + "        \"type\": \"org.symphonyoss.taxonomy.hashtag\",\n"
-        + "        \"value\": \"awesome\"\n"
-        + "      }\n"
-        + "    ],\n"
-        + "    \"type\": \"org.symphonyoss.taxonomy\",\n"
-        + "    \"version\": \"1.0\"\n"
-        + "  },\n"
-        + "  \"1\": {\n"
-        + "    \"id\": [\n"
-        + "      {\n"
-        + "        \"type\": \"org.symphonyoss.taxonomy.hashtag\",\n"
-        + "        \"value\": \"super\"\n"
-        + "      }\n"
-        + "    ],\n"
-        + "    \"type\": \"org.symphonyoss.taxonomy\",\n"
-        + "    \"version\": \"1.0\"\n"
-        + "  }\n"
-        + "}\n");
+    event.getSource().getMessage().data("""
+        {
+          "0": {
+            "id": [
+              {
+                "type": "org.symphonyoss.taxonomy.hashtag",
+                "value": "awesome"
+              }
+            ],
+            "type": "org.symphonyoss.taxonomy",
+            "version": "1.0"
+          },
+          "1": {
+            "id": [
+              {
+                "type": "org.symphonyoss.taxonomy.hashtag",
+                "value": "super"
+              }
+            ],
+            "type": "org.symphonyoss.taxonomy",
+            "version": "1.0"
+          }
+        }
+        """);
     engine.onEvent(event);
 
     verify(messageService, timeout(5000).times(1)).send(eq("abc"), content("Received awesome super"));
@@ -233,28 +235,30 @@ class DatafeedEventsIntegrationTest extends IntegrationTest {
 
     engine.deploy(workflow);
     RealTimeEvent<V4MessageSent> event = messageReceived("abc", "/go $GOOG $TSLA");
-    event.getSource().getMessage().data("{\n"
-        + "  \"0\": {\n"
-        + "    \"id\": [\n"
-        + "      {\n"
-        + "        \"type\": \"org.symphonyoss.fin.security.id.ticker\",\n"
-        + "        \"value\": \"GOOG\"\n"
-        + "      }\n"
-        + "    ],\n"
-        + "    \"type\": \"org.symphonyoss.fin.security\",\n"
-        + "    \"version\": \"1.0\"\n"
-        + "  },\n"
-        + "  \"1\": {\n"
-        + "    \"id\": [\n"
-        + "      {\n"
-        + "        \"type\": \"org.symphonyoss.fin.security.id.ticker\",\n"
-        + "        \"value\": \"TSLA\"\n"
-        + "      }\n"
-        + "    ],\n"
-        + "    \"type\": \"org.symphonyoss.fin.security\",\n"
-        + "    \"version\": \"1.0\"\n"
-        + "  }\n"
-        + "}\n");
+    event.getSource().getMessage().data("""
+        {
+          "0": {
+            "id": [
+              {
+                "type": "org.symphonyoss.fin.security.id.ticker",
+                "value": "GOOG"
+              }
+            ],
+            "type": "org.symphonyoss.fin.security",
+            "version": "1.0"
+          },
+          "1": {
+            "id": [
+              {
+                "type": "org.symphonyoss.fin.security.id.ticker",
+                "value": "TSLA"
+              }
+            ],
+            "type": "org.symphonyoss.fin.security",
+            "version": "1.0"
+          }
+        }
+        """);
     engine.onEvent(event);
 
     verify(messageService, timeout(5000).times(1)).send(eq("abc"), content("Received GOOG TSLA"));

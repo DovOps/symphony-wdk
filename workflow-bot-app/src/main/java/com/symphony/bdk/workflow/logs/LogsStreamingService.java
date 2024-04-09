@@ -32,7 +32,7 @@ public class LogsStreamingService {
     emitters.forEach(emitter -> {
       SseEmitter.SseEventBuilder event = SseEmitter.event()
           .id(DateTimeFormatter.ISO_INSTANT.format(Instant.ofEpochMilli(timestamp)))
-          .data(String.format("[%s] %s - %s", level, logger, data))
+          .data("[%s] %s - %s".formatted(level, logger, data))
           .name("message");
       boolean sent = sendMessage(event, emitter);
       if (!sent) {

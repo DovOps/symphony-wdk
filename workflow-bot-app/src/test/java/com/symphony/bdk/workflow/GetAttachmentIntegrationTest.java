@@ -38,7 +38,7 @@ class GetAttachmentIntegrationTest extends IntegrationTest {
     verify(messageService, timeout(5000).times(1)).getAttachment("STREAM_ID", "MSG_ID", "ATTACHMENT_ID");
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_ATTACHMENT_PATH_KEY, "getAttachment"),
+        .hasOutput(OUTPUTS_ATTACHMENT_PATH_KEY.formatted("getAttachment"),
             Paths.get("dummy", lastProcess(workflow).get(), "getAttachment-myAttachment.txt").toString());
   }
 

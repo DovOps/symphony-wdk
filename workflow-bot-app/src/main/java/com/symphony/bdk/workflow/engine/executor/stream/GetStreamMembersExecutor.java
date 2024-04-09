@@ -27,7 +27,7 @@ public class GetStreamMembersExecutor implements ActivityExecutor<GetStreamMembe
       members = execution.bdk().streams().listStreamMembers(streamId);
     } else {
       throw new IllegalArgumentException(
-          String.format("Skip and limit should both be set to get stream members in activity %s",
+          "Skip and limit should both be set to get stream members in activity %s".formatted(
               getStreamMembers.getId()));
     }
     execution.setOutputVariable(OUTPUTS_MEMBERS_KEY, members);

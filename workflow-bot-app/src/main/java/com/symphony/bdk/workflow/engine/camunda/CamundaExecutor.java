@@ -123,7 +123,7 @@ public class CamundaExecutor implements JavaDelegate {
           new CamundaActivityExecutorContext(execution, activity, event, resourceLoader, bdk, sharedDataStore,
               secretKeeper));
     } catch (Exception e) {
-      log.error(String.format("Activity from workflow %s failed", execution.getProcessDefinitionId()), e);
+      log.error("Activity from workflow %s failed".formatted(execution.getProcessDefinitionId()), e);
       logErrorVariables(execution, activity, e);
       throw new BpmnError("FAILURE", e);
     } finally {
@@ -199,7 +199,7 @@ public class CamundaExecutor implements JavaDelegate {
 
       execution.setVariable(activityId, objectValue);
       flattenOutputs.forEach((key, value) -> execution.setVariable(
-          String.format("%s.%s.%s", activityId, ActivityExecutorContext.OUTPUTS, key), value));
+          "%s.%s.%s".formatted(activityId, ActivityExecutorContext.OUTPUTS, key), value));
     }
 
     @Override

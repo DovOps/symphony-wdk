@@ -29,8 +29,8 @@ public class ActivityNodeBuilder extends AbstractNodeBpmnBuilder {
 
   protected AbstractFlowNodeBuilder<?, ?> addTask(AbstractFlowNodeBuilder<?, ?> eventBuilder, BaseActivity activity) {
     // hardcoded so we can rely on Camunda's script task instead of a service task
-    if (activity instanceof ExecuteScript) {
-      return addScriptTask(eventBuilder, (ExecuteScript) activity);
+    if (activity instanceof ExecuteScript script) {
+      return addScriptTask(eventBuilder, script);
     }
     return addServiceTask(eventBuilder, activity);
   }

@@ -100,7 +100,7 @@ public class DefaultObjectConverter implements ObjectConverter {
       return Collections.emptyList();
     }
 
-    var converter = converterMap.get(new ConverterKey(source.get(0).getClass(), targetClass));
+    var converter = converterMap.get(new ConverterKey(source.getFirst().getClass(), targetClass));
     if (Objects.isNull(converter)) {
       throw new IllegalArgumentException("Cannot find converter for " + targetClass);
     }
@@ -115,7 +115,7 @@ public class DefaultObjectConverter implements ObjectConverter {
       return Collections.emptyList();
     }
 
-    var converter = biConverterMap.get(new ConverterKey(source.get(0).getClass(), targetClass));
+    var converter = biConverterMap.get(new ConverterKey(source.getFirst().getClass(), targetClass));
     if (Objects.isNull(converter)) {
       throw new IllegalArgumentException("Cannot find converter for " + targetClass);
     }
@@ -133,7 +133,7 @@ public class DefaultObjectConverter implements ObjectConverter {
       return Collections.emptyList();
     }
 
-    if (!sourceClass.isAssignableFrom(source.get(0).getClass())) {
+    if (!sourceClass.isAssignableFrom(source.getFirst().getClass())) {
       throw new IllegalArgumentException("Cannot find converter for the given source type " + sourceClass);
     }
 
@@ -152,7 +152,7 @@ public class DefaultObjectConverter implements ObjectConverter {
       return Collections.emptyList();
     }
 
-    if (!sourceClass.isAssignableFrom(source.get(0).getClass())) {
+    if (!sourceClass.isAssignableFrom(source.getFirst().getClass())) {
       throw new IllegalArgumentException("Cannot find converter for the given source type " + sourceClass);
     }
 

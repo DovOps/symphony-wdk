@@ -3,7 +3,6 @@ package com.symphony.bdk.workflow.engine.camunda.bpmn.builder;
 import com.symphony.bdk.workflow.engine.WorkflowNode;
 import com.symphony.bdk.workflow.engine.WorkflowNodeType;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.EnumMap;
@@ -14,7 +13,7 @@ import java.util.Map;
 public class WorkflowNodeBpmnBuilderRegistry {
   private final Map<WorkflowNodeType, WorkflowNodeBpmnBuilder> factory;
 
-  public WorkflowNodeBpmnBuilderRegistry(@Autowired List<WorkflowNodeBpmnBuilder> builders) {
+  public WorkflowNodeBpmnBuilderRegistry(List<WorkflowNodeBpmnBuilder> builders) {
     factory = new EnumMap<>(WorkflowNodeType.class);
     builders.forEach(builder -> factory.put(builder.type(), builder));
   }

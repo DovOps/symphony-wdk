@@ -70,7 +70,7 @@ public class WorkflowExpirationServiceTest {
     expected.setExpirationDate(now);
 
     assertThat(expirationJobsCaptor.getValue()).hasSize(1);
-    assertThat(expirationJobsCaptor.getValue().get(0)).isEqualTo(expected);
+    assertThat(expirationJobsCaptor.getValue().getFirst()).isEqualTo(expected);
     verify(workflowExpirationPlanner).planExpiration(any());
     assertThat(workflowExpirationJobArgumentCaptor.getValue()).isEqualTo(expected);
   }
@@ -83,6 +83,6 @@ public class WorkflowExpirationServiceTest {
 
     assertThatExceptionOfType(NotFoundException.class).isThrownBy(
             () -> workflowExpirationService.scheduleWorkflowExpiration(workflowId, Instant.now()))
-        .satisfies(e -> assertThat(e.getMessage()).isEqualTo(String.format("Workflow %s does not exist.", workflowId)));
+        .satisfies(e -> assertThat(e.getMessage()).isEqualTo("Workflow %s does not exist.".formatted(workflowId)));
   }
 }

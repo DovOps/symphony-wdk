@@ -19,7 +19,6 @@ import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.repository.Deployment;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.model.xml.ModelValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +42,6 @@ public class CamundaEngine implements WorkflowEngine<CamundaTranslatedWorkflowCo
 
   private final AuditTrailLogAction auditTrailLogger;
 
-  @Autowired
   public CamundaEngine(RepositoryService repositoryService, CamundaBpmnBuilder bpmnBuilder,
       List<RealTimeEventProcessor<?>> processors, AuditTrailLogAction auditTrailLogger) {
     this.repositoryService = repositoryService;
@@ -74,7 +72,7 @@ public class CamundaEngine implements WorkflowEngine<CamundaTranslatedWorkflowCo
       return bpmnBuilder.translateWorkflow(workflow);
     } catch (JsonProcessingException | ModelValidationException exception) {
       throw new IllegalArgumentException(
-          String.format("Workflow parsing process failed, \"%s\" may not be a valid workflow.", workflow.getId()),
+          "Workflow parsing process failed, \"%s\" may not be a valid workflow.".formatted(workflow.getId()),
           exception);
     }
   }

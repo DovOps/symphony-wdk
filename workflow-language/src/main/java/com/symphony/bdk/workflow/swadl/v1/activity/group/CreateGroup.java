@@ -2,12 +2,12 @@ package com.symphony.bdk.workflow.swadl.v1.activity.group;
 
 import com.symphony.bdk.workflow.swadl.v1.activity.BaseActivity;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
 import java.util.Set;
-import javax.annotation.Nullable;
 
 /**
  * @see <a href="https://developers.symphony.com/restapi/reference/insertgroup">Add group API</a>

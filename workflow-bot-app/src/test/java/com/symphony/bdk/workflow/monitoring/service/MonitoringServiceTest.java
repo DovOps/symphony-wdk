@@ -236,12 +236,12 @@ class MonitoringServiceTest {
 
     // then
     assertThat(workflowInstanceActivities.getNodes()).hasSize(2);
-    assertThat(workflowInstanceActivities.getNodes().get(0).getOutputs()).hasSize(1);
-    assertThat(workflowInstanceActivities.getNodes().get(0).getWorkflowId()).isEqualTo("workflow");
-    assertThat(workflowInstanceActivities.getNodes().get(0).getInstanceId()).isEqualTo("instance");
-    assertThat(workflowInstanceActivities.getNodes().get(0).getNodeId()).isEqualTo("activity1");
-    assertThat(workflowInstanceActivities.getNodes().get(0).getStartDate()).isNotNull();
-    assertThat(workflowInstanceActivities.getNodes().get(0).getEndDate()).isNotNull();
+    assertThat(workflowInstanceActivities.getNodes().getFirst().getOutputs()).hasSize(1);
+    assertThat(workflowInstanceActivities.getNodes().getFirst().getWorkflowId()).isEqualTo("workflow");
+    assertThat(workflowInstanceActivities.getNodes().getFirst().getInstanceId()).isEqualTo("instance");
+    assertThat(workflowInstanceActivities.getNodes().getFirst().getNodeId()).isEqualTo("activity1");
+    assertThat(workflowInstanceActivities.getNodes().getFirst().getStartDate()).isNotNull();
+    assertThat(workflowInstanceActivities.getNodes().getFirst().getEndDate()).isNotNull();
     assertThat(workflowInstanceActivities.getGlobalVariables().getRevision()).isEqualTo(2);
     assertThat(workflowInstanceActivities.getGlobalVariables().getUpdateTime()).isNotNull();
     if ("errors".equals(errors)) {
@@ -307,10 +307,10 @@ class MonitoringServiceTest {
     assertThat(definitionView.getVariables()).hasSize(1);
     assertThat(definitionView.getVariables()).containsKey("variable");
     assertThat(definitionView.getFlowNodes()).hasSize(2);
-    assertThat(definitionView.getFlowNodes().get(0).getChildren()).hasSize(1);
+    assertThat(definitionView.getFlowNodes().getFirst().getChildren()).hasSize(1);
     assertThat(definitionView.getFlowNodes().get(1).getParents()).hasSize(1);
-    assertThat(definitionView.getFlowNodes().get(0).getType()).isEqualTo("SEND_MESSAGE");
-    assertThat(definitionView.getFlowNodes().get(0).getGroup()).isEqualTo("ACTIVITY");
+    assertThat(definitionView.getFlowNodes().getFirst().getType()).isEqualTo("SEND_MESSAGE");
+    assertThat(definitionView.getFlowNodes().getFirst().getGroup()).isEqualTo("ACTIVITY");
   }
 
   @Test
@@ -335,8 +335,8 @@ class MonitoringServiceTest {
 
     // then
     assertThat(variableViews).hasSize(1);
-    assertThat(variableViews.get(0).getUpdateTime()).isNotNull();
-    assertThat(variableViews.get(0).getRevision()).isEqualTo(1);
-    assertThat(variableViews.get(0).getOutputs()).hasSize(1);
+    assertThat(variableViews.getFirst().getUpdateTime()).isNotNull();
+    assertThat(variableViews.getFirst().getRevision()).isEqualTo(1);
+    assertThat(variableViews.getFirst().getOutputs()).hasSize(1);
   }
 }

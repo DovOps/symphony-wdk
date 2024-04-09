@@ -193,7 +193,7 @@ public class WorkflowDirectGraphBuilder {
         }
       }
     }
-    if ((event instanceof EventWithTimeout && StringUtils.isNotEmpty(((EventWithTimeout) event).getTimeout()))
+    if ((event instanceof EventWithTimeout withTimeout && StringUtils.isNotEmpty(withTimeout.getTimeout()))
         // timeout value from activity itself
         || StringUtils.isNotEmpty(timeout)) {
       timeout = timeout == null ? ((EventWithTimeout) event).getTimeout() : timeout;
@@ -209,17 +209,17 @@ public class WorkflowDirectGraphBuilder {
       WorkflowNode signalEvent, String activityId) {
     validateExistingNodeId(eventNodeId.substring(WorkflowEventType.FORM_REPLIED.getEventName().length()),
         activityId, workflow.getId(), directGraph);
-    if (event instanceof EventWithTimeout && StringUtils.isEmpty(((EventWithTimeout) event).getTimeout())) {
-      ((EventWithTimeout) event).setTimeout(DEFAULT_FORM_REPLIED_EVENT_TIMEOUT);
+    if (event instanceof EventWithTimeout timeout && StringUtils.isEmpty(timeout.getTimeout())) {
+      timeout.setTimeout(DEFAULT_FORM_REPLIED_EVENT_TIMEOUT);
     }
     directGraph.registerToDictionary(signalEvent.getId(), signalEvent.elementType(WorkflowNodeType.FORM_REPLIED_EVENT));
   }
 
   private String computeExpiredActivity(Event event, String activityId, WorkflowDirectedGraph directGraph) {
     // get the parent timeout event of the referred activity
-    String parentActivity = directGraph.getParents(event.getActivityExpired().getActivityId()).get(0);
+    String parentActivity = directGraph.getParents(event.getActivityExpired().getActivityId()).getFirst();
     validateExistingNodeId(parentActivity, activityId, workflow.getId(), directGraph);
-    String grandParentId = directGraph.getParents(parentActivity).get(0);
+    String grandParentId = directGraph.getParents(parentActivity).getFirst();
 
     WorkflowNode parentNode = directGraph.readWorkflowNode(parentActivity);
     if (parentNode.isNotExclusiveFormReply()) {
@@ -253,7 +253,7 @@ public class WorkflowDirectGraphBuilder {
   private void computeActivity(int activityIndex, List<Activity> activities, String nodeId, Event event,
       RelationalEvents onEvents, WorkflowDirectedGraph directGraph) {
     if (activityIndex == 0) {
-      validateFirstActivity(activities.get(0).getActivity(), event, workflow.getId());
+      validateFirstActivity(activities.getFirst().getActivity(), event, workflow.getId());
       directGraph.addStartEvent(nodeId);
     } else if (!directGraph.getParents(activities.get(activityIndex - 1).getActivity().getId())
         .contains(nodeId)) { // the current event node is not a parent of previous activity

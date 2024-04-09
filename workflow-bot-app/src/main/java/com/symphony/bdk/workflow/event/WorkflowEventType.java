@@ -257,9 +257,9 @@ public enum WorkflowEventType implements EventVisitor {
 
     @Override
     public Triple<String, String, Class<?>> getEventTripleInfo(Event event, String workflowId, String botName) {
-      return WorkflowEventType.getEventType(event.getOneOf().get(0))
+      return WorkflowEventType.getEventType(event.getOneOf().getFirst())
           .get()
-          .getEventTripleInfo(event.getOneOf().get(0), workflowId, botName);
+          .getEventTripleInfo(event.getOneOf().getFirst(), workflowId, botName);
     }
   };
 

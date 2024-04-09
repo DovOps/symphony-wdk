@@ -138,7 +138,7 @@ public class WorkflowDirectedGraph {
 
     public String getUniqueChild() {
       if (isChildUnique()) {
-        return children.get(0);
+        return children.getFirst();
       } else {
         throw new IllegalStateException("No children or not unique child");
       }

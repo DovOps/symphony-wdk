@@ -51,14 +51,16 @@ public class WorkflowManagementServiceTest {
   @InjectMocks
   WorkflowManagementService workflowManagementService;
 
-  static final String swadl = "id: test\n"
-      + "activities:\n"
-      + "  - send-message:\n"
-      + "      id: msg\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: msg\n"
-      + "      content: content";
+  static final String swadl = """
+      id: test
+      activities:
+        - send-message:
+            id: msg
+            on:
+              message-received:
+                content: msg
+            content: content\
+      """;
 
   static Workflow workflow;
   static SwadlView swadlView;

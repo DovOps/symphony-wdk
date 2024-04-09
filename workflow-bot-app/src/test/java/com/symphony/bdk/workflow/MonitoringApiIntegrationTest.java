@@ -191,7 +191,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH, "testingWorkflow1"))
+        .get(LIST_WORKFLOW_INSTANCES_PATH.formatted("testingWorkflow1"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -223,7 +223,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=pending&version=" + version, "testingWorkflow4"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=pending&version=" + version).formatted("testingWorkflow4"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -239,7 +239,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?version=" + version, "testingWorkflow4"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?version=" + version).formatted("testingWorkflow4"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -255,7 +255,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=completed", "testingWorkflow4"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=completed").formatted("testingWorkflow4"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -265,7 +265,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=failed", "testingWorkflow4"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=failed").formatted("testingWorkflow4"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -290,7 +290,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=completed", "testingWorkflow3"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=completed").formatted("testingWorkflow3"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -305,7 +305,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=pending", "testingWorkflow3"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=pending").formatted("testingWorkflow3"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -315,7 +315,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=failed", "testingWorkflow3"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=failed").formatted("testingWorkflow3"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -342,7 +342,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=failed", "testingWorkflow1"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=failed").formatted("testingWorkflow1"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -357,7 +357,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=completed", "testingWorkflow1"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=completed").formatted("testingWorkflow1"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -367,7 +367,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH + "?status=pending", "testingWorkflow1"))
+        .get((LIST_WORKFLOW_INSTANCES_PATH + "?status=pending").formatted("testingWorkflow1"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -383,11 +383,11 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(path, "testingWorkflow4"))
+        .get(path.formatted("testingWorkflow4"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.BAD_REQUEST.value())
-        .body("message", equalTo(String.format(BAD_WORKFLOW_INSTANCE_STATUS_EXCEPTION_MESSAGE, "unknownStatus")));
+        .body("message", equalTo(BAD_WORKFLOW_INSTANCE_STATUS_EXCEPTION_MESSAGE.formatted("unknownStatus")));
   }
 
   @Test
@@ -398,7 +398,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCES_PATH, "testingWorkflow1"))
+        .get(LIST_WORKFLOW_INSTANCES_PATH.formatted("testingWorkflow1"))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -427,7 +427,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH, "testingWorkflow1", processDefinition))
+        .get(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH.formatted("testingWorkflow1", processDefinition))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -483,7 +483,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH, "testingWorkflowWithTimeout", processDefinition))
+        .get(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH.formatted("testingWorkflowWithTimeout", processDefinition))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -548,7 +548,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH, "testingWorkflow1", processDefinition))
+        .get(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH.formatted("testingWorkflow1", processDefinition))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -605,7 +605,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_before=" + beforeFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_before=" + beforeFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -620,7 +620,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_before=" + afterFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_before=" + afterFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -645,7 +645,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_before=" + afterSecondSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_before=" + afterSecondSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -704,7 +704,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_after=" + beforeFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_after=" + beforeFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -732,7 +732,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_after=" + afterFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_after=" + afterFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -751,7 +751,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_after=" + afterSecondSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?started_after=" + afterSecondSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -796,7 +796,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_before=" + beforeFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_before=" + beforeFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -812,7 +812,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_before=" + afterFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_before=" + afterFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -834,7 +834,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_before=" + afterSecondSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_before=" + afterSecondSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -893,7 +893,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_after=" + beforeFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_after=" + beforeFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -921,7 +921,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_after=" + afterFirstSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_after=" + afterFirstSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -943,7 +943,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_after=" + afterSecondSlashInstant,
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + "?finished_after=" + afterSecondSlashInstant).formatted(
             "testingWorkflow4", processDefinition))
         .then()
         .assertThat()
@@ -965,7 +965,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + queryParam, "testingWorkflow4", ""))
+        .get((LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH + queryParam).formatted("testingWorkflow4", ""))
         .then()
         .assertThat()
         .statusCode(HttpStatus.BAD_REQUEST.value());
@@ -976,7 +976,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
     final String unknownWorkflowId = "unknownWorkflowId";
     final String unknownInstanceId = "unknownInstanceId";
     final String expectedErrorMsg =
-        String.format(UNKNOWN_WORKFLOW_EXCEPTION_MESSAGE, unknownWorkflowId, unknownInstanceId);
+        UNKNOWN_WORKFLOW_EXCEPTION_MESSAGE.formatted(unknownWorkflowId, unknownInstanceId);
 
     engine.undeployByWorkflowId(unknownWorkflowId);
 
@@ -984,7 +984,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH, unknownWorkflowId, unknownInstanceId))
+        .get(LIST_WORKFLOW_INSTANCE_ACTIVITIES_PATH.formatted(unknownWorkflowId, unknownInstanceId))
         .then()
         .assertThat()
         .statusCode(HttpStatus.NOT_FOUND.value())
@@ -1006,7 +1006,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_NODES_PATH, "testingWorkflow1"))
+        .get(LIST_WORKFLOW_NODES_PATH.formatted("testingWorkflow1"))
         .thenReturn();
 
     // actual flow nodes
@@ -1104,7 +1104,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_NODES_PATH, "on-activity-failed-one-of"))
+        .get(LIST_WORKFLOW_NODES_PATH.formatted("on-activity-failed-one-of"))
         .thenReturn();
 
     // actual flow nodes
@@ -1186,7 +1186,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_NODES_PATH, "all-of-messages-received"))
+        .get(LIST_WORKFLOW_NODES_PATH.formatted("all-of-messages-received"))
         .thenReturn();
 
     // actual flow nodes
@@ -1301,7 +1301,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_NODES_PATH, "diagram-test"))
+        .get(LIST_WORKFLOW_NODES_PATH.formatted("diagram-test"))
         .thenReturn();
 
     // actual flow nodes
@@ -1386,13 +1386,13 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
   void listWorkflowActivitiesDefinitions_unknownWorkflowId() {
     final String unknownWorkflowId = "unknownWorkflowId";
     final String expectedErrorMsg =
-        String.format("No workflow with id '%s' and version 'null' is found", unknownWorkflowId);
+        "No workflow with id '%s' and version 'null' is found".formatted(unknownWorkflowId);
 
     given()
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_NODES_PATH, unknownWorkflowId))
+        .get(LIST_WORKFLOW_NODES_PATH.formatted(unknownWorkflowId))
         .then()
         .assertThat()
         .statusCode(HttpStatus.NOT_FOUND.value())
@@ -1423,7 +1423,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES, "testingWorkflow5", processDefinition))
+        .get(LIST_WORKFLOW_GLOBAL_VARIABLES.formatted("testingWorkflow5", processDefinition))
         .then()
         .assertThat()
         .statusCode(HttpStatus.OK.value())
@@ -1477,7 +1477,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_before=" + beforeFirstSlashInstant,
+        .get((LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_before=" + beforeFirstSlashInstant).formatted(
             "testingWorkflow5", processDefinition))
         .then()
         .assertThat()
@@ -1488,7 +1488,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_before=" + afterFirstSlashInstant,
+        .get((LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_before=" + afterFirstSlashInstant).formatted(
             "testingWorkflow5", processDefinition))
         .then()
         .assertThat()
@@ -1501,7 +1501,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_before=" + afterSecondSlashInstant,
+        .get((LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_before=" + afterSecondSlashInstant).formatted(
             "testingWorkflow5", processDefinition))
         .then()
         .assertThat()
@@ -1541,7 +1541,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_after=" + beforeFirstSlashInstant,
+        .get((LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_after=" + beforeFirstSlashInstant).formatted(
             "testingWorkflow5", processDefinition))
         .then()
         .assertThat()
@@ -1555,7 +1555,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_after=" + afterFirstSlashInstant,
+        .get((LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_after=" + afterFirstSlashInstant).formatted(
             "testingWorkflow5", processDefinition))
         .then()
         .assertThat()
@@ -1567,7 +1567,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_after=" + afterSecondSlashInstant,
+        .get((LIST_WORKFLOW_GLOBAL_VARIABLES + "?updated_after=" + afterSecondSlashInstant).formatted(
             "testingWorkflow5", processDefinition))
         .then()
         .assertThat()
@@ -1584,7 +1584,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES + queryParam, "testingWorkflow5", ""))
+        .get((LIST_WORKFLOW_GLOBAL_VARIABLES + queryParam).formatted("testingWorkflow5", ""))
         .then()
         .assertThat()
         .statusCode(HttpStatus.BAD_REQUEST.value());
@@ -1595,7 +1595,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
     final String unknownWorkflowId = "unknownWorkflowId";
     final String unknownInstanceId = "unknownInstanceId";
     final String expectedErrorMsg =
-        String.format(UNKNOWN_WORKFLOW_EXCEPTION_MESSAGE, unknownWorkflowId, unknownInstanceId);
+        UNKNOWN_WORKFLOW_EXCEPTION_MESSAGE.formatted(unknownWorkflowId, unknownInstanceId);
 
     engine.undeployAll(); // clean any old running instance
 
@@ -1603,7 +1603,7 @@ class MonitoringApiIntegrationTest extends IntegrationTest {
         .header(X_MONITORING_TOKEN_HEADER_KEY, X_MONITORING_TOKEN_HEADER_VALUE)
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format(LIST_WORKFLOW_GLOBAL_VARIABLES, unknownWorkflowId, unknownInstanceId))
+        .get(LIST_WORKFLOW_GLOBAL_VARIABLES.formatted(unknownWorkflowId, unknownInstanceId))
         .then()
         .assertThat()
         .statusCode(HttpStatus.NOT_FOUND.value())

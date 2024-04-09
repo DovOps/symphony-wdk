@@ -77,23 +77,31 @@ public interface WorkflowsApi {
       @Parameter(description = "Workflows monitoring token to authenticate the request")
       @RequestHeader(name = X_MONITORING_TOKEN_KEY) String token,
       @Parameter(
-          description = "Optional query parameter to filter activities having started before the date. "
-              + "The date is an ISO 8601 date",
+          description = """
+              Optional query parameter to filter activities having started before the date. \
+              The date is an ISO 8601 date\
+              """,
           name = "started_before", example = "2022-09-21T15:43:24.917Z")
       @RequestParam(required = false, name = "started_before") Instant startedBefore,
       @Parameter(
-          description = "Optional query parameter to filter activities having started after the date. "
-              + "The date is an ISO 8601 date",
+          description = """
+              Optional query parameter to filter activities having started after the date. \
+              The date is an ISO 8601 date\
+              """,
           name = "started_after", example = "2022-09-21T15:43:24.917Z")
       @RequestParam(required = false, name = "started_after") Instant startedAfter,
       @Parameter(
-          description = "Optional query parameter to filter activities having finished before the date. "
-              + "The date is an ISO 8601 date",
+          description = """
+              Optional query parameter to filter activities having finished before the date. \
+              The date is an ISO 8601 date\
+              """,
           name = "finished_before", example = "2022-09-21T15:43:24.917Z")
       @RequestParam(required = false, name = "finished_before") Instant finishedBefore,
       @Parameter(
-          description = "Optional query parameter to filter activities having finished after the date. "
-              + "The date is an ISO 8601 date",
+          description = """
+              Optional query parameter to filter activities having finished after the date. \
+              The date is an ISO 8601 date\
+              """,
           name = "finished_after", example = "2022-09-21T15:43:24.917Z")
       @RequestParam(required = false, name = "finished_after") Instant finishedAfter
   );
@@ -122,10 +130,14 @@ public interface WorkflowsApi {
       @PathVariable String instanceId,
       @Parameter(description = "Workflows monitoring token to authenticate the request")
       @RequestHeader(name = X_MONITORING_TOKEN_KEY) String token,
-      @Parameter(description = "Optional query parameter to filter global variables update occurred before the date. "
-          + "The date is an ISO 8601 date", example = "2022-09-21T15:43:24.917Z")
+      @Parameter(description = """
+          Optional query parameter to filter global variables update occurred before the date. \
+          The date is an ISO 8601 date\
+          """, example = "2022-09-21T15:43:24.917Z")
       @RequestParam(required = false, name = "updated_before") Instant updatedBefore,
-      @Parameter(description = "Optional query parameter to filter global variables update occurred after the date. "
-          + "The date is an ISO 8601 date", example = "2022-09-21T15:43:24.917Z")
+      @Parameter(description = """
+          Optional query parameter to filter global variables update occurred after the date. \
+          The date is an ISO 8601 date\
+          """, example = "2022-09-21T15:43:24.917Z")
       @RequestParam(required = false, name = "updated_after") Instant updatedAfter);
 }

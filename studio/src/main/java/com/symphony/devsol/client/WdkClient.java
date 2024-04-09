@@ -44,7 +44,7 @@ public class WdkClient {
 
   @GetMapping(value = "v1/export", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
   public ResponseEntity<byte[]> exportWorkflows(
-      @RequestAttribute("user") UserClaim user
+      @RequestAttribute UserClaim user
   ) {
     if (!admins.contains(user.getId())) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
@@ -85,8 +85,8 @@ public class WdkClient {
 
   @PostMapping("/v1/import")
   public void importWorkflows(
-      @RequestParam("file") MultipartFile file,
-      @RequestAttribute("user") UserClaim user
+      @RequestParam MultipartFile file,
+      @RequestAttribute UserClaim user
   ) {
     if (!admins.contains(user.getId())) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);

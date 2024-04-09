@@ -23,8 +23,8 @@ class DebugActivityIntegrationTest extends IntegrationTest {
     engine.onEvent(messageReceived("/debug-global-variables"));
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format("%s.outputs.object", "debugGlobalVariables1"), "Hello World")
-        .hasOutput(String.format("%s.outputs.object", "debugGlobalVariables2"), "value");
+        .hasOutput("%s.outputs.object".formatted("debugGlobalVariables1"), "Hello World")
+        .hasOutput("%s.outputs.object".formatted("debugGlobalVariables2"), "value");
   }
 
   @Test

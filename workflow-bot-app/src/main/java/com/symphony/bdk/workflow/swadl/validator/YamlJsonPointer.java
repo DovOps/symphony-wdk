@@ -34,8 +34,8 @@ public class YamlJsonPointer {
     if (pointer.tail() == null) {
       return parentNode;
     }
-    if (node instanceof MappingNode) {
-      return findMapping((MappingNode) node, pointer);
+    if (node instanceof MappingNode mappingNode) {
+      return findMapping(mappingNode, pointer);
     } else if (node instanceof CollectionNode) {
       return findCollection((CollectionNode<Node>) node, pointer);
     }
@@ -45,7 +45,7 @@ public class YamlJsonPointer {
   private static Node findMapping(MappingNode node, JsonPointer pointer) {
     for (NodeTuple value : node.getValue()) {
       Node key = value.getKeyNode();
-      if (key instanceof ScalarNode && pointer.matchesProperty(((ScalarNode) key).getValue())) {
+      if (key instanceof ScalarNode scalarNode && pointer.matchesProperty(scalarNode.getValue())) {
         return find(value.getValueNode(), key, pointer.tail());
       }
     }

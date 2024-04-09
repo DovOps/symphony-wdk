@@ -58,9 +58,11 @@ public interface WorkflowsMgtApi {
       @Parameter(description = "Workflow SWADL form to update") @Valid @ModelAttribute SwadlView swadlView);
 
   @Operation(description =
-      "Get the active version of the workflow by the given ID, which is default behavior; if the version parameter"
-          + "is given, that version will be returned; if all_versions flag is true, all versions will be returned; if"
-          + "version is provided and versions flag is true, all versions will be returned.")
+      """
+      Get the active version of the workflow by the given ID, which is default behavior; if the version parameter\
+      is given, that version will be returned; if all_versions flag is true, all versions will be returned; if\
+      version is provided and versions flag is true, all versions will be returned.\
+      """)
   @ApiResponses(value = {@ApiResponse(responseCode = "204"),
       @ApiResponse(responseCode = "404", description = "No workflow found with id {id}"),
       @ApiResponse(responseCode = "401", description = "Request is not authorised")})
@@ -71,7 +73,7 @@ public interface WorkflowsMgtApi {
       @RequestHeader(name = X_MANAGEMENT_TOKEN_KEY) String token,
       @Parameter(description = "Workflow's id that is provided in SWADL", required = true)
       @PathVariable String workflowId,
-      @Parameter(description = "Get a specific version value") @RequestParam(required = false, name = "version")
+      @Parameter(description = "Get a specific version value") @RequestParam(required = false)
       Long version,
       @Parameter(description = "Get all versions flag")
       @RequestParam(required = false, name = "all_versions", defaultValue = "false") Boolean allVersions);
@@ -89,7 +91,7 @@ public interface WorkflowsMgtApi {
       @Parameter(description = "Workflow's id that is provided in SWADL", required = true)
       @PathVariable String workflowId,
       @Parameter(description = "Workflow's version to delete")
-      @RequestParam(required = false, name = "version")
+      @RequestParam(required = false)
       Long version);
 
   @Operation(description = "Fall back to a specific workflow version, or set an expiration time for the workflow.")
@@ -104,7 +106,7 @@ public interface WorkflowsMgtApi {
       @Parameter(description = "Workflow's id that is provided in SWADL", required = true)
       @PathVariable String workflowId,
       @Parameter(description = "Workflow's version to roll back to")
-      @RequestParam(required = false, name = "version")
+      @RequestParam(required = false)
       Long version,
       @Parameter(description = "Expiration date. Instant epoch.")
       @RequestParam(required = false, name = "expiration_date")

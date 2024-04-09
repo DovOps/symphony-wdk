@@ -18,7 +18,7 @@ public class Debug extends BaseActivity {
   private Object object;
 
   public Debug() {
-    this.setId(String.format("randomId-%s-%s", RANDOM.nextInt(100), System.currentTimeMillis() + ""));
+    this.setId("randomId-%s-%s".formatted(RANDOM.nextInt(100), System.currentTimeMillis() + ""));
   }
 }
 

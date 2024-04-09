@@ -23,25 +23,25 @@ public class GetAttachmentExecutor implements ActivityExecutor<GetAttachment> {
     V4Message actualMessage = execution.bdk().messages().getMessage(activity.getMessageId());
 
     if (actualMessage == null) {
-      throw new IllegalArgumentException(String.format("Message with id %s not found", activity.getMessageId()));
+      throw new IllegalArgumentException("Message with id %s not found".formatted(activity.getMessageId()));
     }
 
     if (actualMessage.getAttachments() == null) {
       throw new IllegalStateException(
-          String.format("No attachments in requested message with id %s", actualMessage.getMessageId()));
+          "No attachments in requested message with id %s".formatted(actualMessage.getMessageId()));
     }
 
     V4AttachmentInfo attachmentInfo = actualMessage.getAttachments().stream()
         .filter(attachment -> attachment.getId().equals(activity.getAttachmentId()))
         .findFirst()
         .orElseThrow(() -> new IllegalStateException(
-            String.format("No attachment with id %s found in message with id %s", activity.getAttachmentId(),
-                activity.getMessageId())));
+        "No attachment with id %s found in message with id %s".formatted(activity.getAttachmentId(),
+            activity.getMessageId())));
 
     byte[] attachmentFromMessage = execution.bdk().messages().getAttachment(
         actualMessage.getStream().getStreamId(), actualMessage.getMessageId(), attachmentInfo.getId());
 
-    String fileName = String.format("%s-%s", execution.getCurrentActivityId(), attachmentInfo.getName());
+    String fileName = "%s-%s".formatted(execution.getCurrentActivityId(), attachmentInfo.getName());
     Path attachmentPath = storeAttachment(attachmentFromMessage, fileName, execution);
 
     execution.setOutputVariable(OUTPUT_ATTACHMENT_PATH_KEY, attachmentPath.toString());

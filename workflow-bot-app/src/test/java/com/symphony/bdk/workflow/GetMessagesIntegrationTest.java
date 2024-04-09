@@ -46,7 +46,7 @@ class GetMessagesIntegrationTest extends IntegrationTest {
 
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_ONE_MESSAGE_KEY, "getMessageByIdFound"), message(msgId));
+        .hasOutput(OUTPUTS_ONE_MESSAGE_KEY.formatted("getMessageByIdFound"), message(msgId));
   }
 
   @Test
@@ -65,7 +65,7 @@ class GetMessagesIntegrationTest extends IntegrationTest {
 
     assertThat(workflow)
         .isExecuted()
-        .hasOutput(String.format(OUTPUTS_ONE_MESSAGE_KEY, "getMessageByIdUnfound"), null);
+        .hasOutput(OUTPUTS_ONE_MESSAGE_KEY.formatted("getMessageByIdUnfound"), null);
   }
 
   @Test
@@ -97,7 +97,7 @@ class GetMessagesIntegrationTest extends IntegrationTest {
     assertEquals(pagination.getSkip(), 0);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_LIST_MESSAGES_KEY, "listMessagesWithPagination"), messages);
+        .hasOutput(OUTPUTS_LIST_MESSAGES_KEY.formatted("listMessagesWithPagination"), messages);
   }
 
   @Test
@@ -124,7 +124,7 @@ class GetMessagesIntegrationTest extends IntegrationTest {
     assertThat(instantArgumentCaptor.getValue()).isNotNull();
     assertThat(workflow)
         .isExecuted()
-        .hasOutput(String.format(OUTPUTS_LIST_MESSAGES_KEY, "listMessagesWithoutPagination"), messages);
+        .hasOutput(OUTPUTS_LIST_MESSAGES_KEY.formatted("listMessagesWithoutPagination"), messages);
   }
 
   @Test

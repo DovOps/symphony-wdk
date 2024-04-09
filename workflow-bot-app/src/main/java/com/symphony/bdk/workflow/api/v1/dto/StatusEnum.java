@@ -16,7 +16,7 @@ public enum StatusEnum {
       return StatusEnum.FAILED;
     } else {
       throw new IllegalArgumentException(
-          String.format("Workflow instance status %s is not known. Allowed values [Completed, Pending, Failed]",
+          "Workflow instance status %s is not known. Allowed values [Completed, Pending, Failed]".formatted(
               status));
     }
   }

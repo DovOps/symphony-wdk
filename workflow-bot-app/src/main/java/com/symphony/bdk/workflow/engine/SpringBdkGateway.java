@@ -14,15 +14,13 @@ import com.symphony.bdk.core.service.user.UserService;
 import com.symphony.bdk.ext.group.SymphonyGroupService;
 import com.symphony.bdk.workflow.engine.executor.BdkGateway;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 @Slf4j
 @Component
@@ -40,7 +38,6 @@ public class SpringBdkGateway implements BdkGateway {
   private final BdkConfig config;
   private final AuthenticatorFactory authenticatorFactory;
 
-  @Autowired
   public SpringBdkGateway(@Nonnull BdkConfig config, @Nullable AuthenticatorFactory authenticatorFactory,
       MessageService messageService,
       StreamService streamService, UserService userService,

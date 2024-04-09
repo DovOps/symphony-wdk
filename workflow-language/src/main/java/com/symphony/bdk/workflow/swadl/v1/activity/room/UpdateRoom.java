@@ -3,11 +3,11 @@ package com.symphony.bdk.workflow.swadl.v1.activity.room;
 import com.symphony.bdk.workflow.swadl.v1.activity.OboActivity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.Map;
-import javax.annotation.Nullable;
 
 /**
  * @see <a href="https://developers.symphony.com/restapi/reference#update-room-v3">Update room API</a>

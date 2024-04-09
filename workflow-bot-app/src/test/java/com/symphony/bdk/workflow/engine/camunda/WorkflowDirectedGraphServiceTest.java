@@ -22,14 +22,16 @@ class WorkflowDirectedGraphServiceTest extends IntegrationTest {
   @Autowired WorkflowDirectedGraphService directedGraphService;
   @Autowired CacheManager cacheManager;
 
-  static String swadl = "id: workflow\n"
-      + "activities:\n"
-      + "  - do-something:\n"
-      + "      id: doIt\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: /execute\n"
-      + "      my-parameter: abc";
+  static String swadl = """
+      id: workflow
+      activities:
+        - do-something:
+            id: doIt
+            on:
+              message-received:
+                content: /execute
+            my-parameter: abc\
+      """;
 
   @AfterEach
   void cleanup() {

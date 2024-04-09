@@ -2,11 +2,11 @@ package com.symphony.bdk.workflow.swadl.v1.activity.connection;
 
 import com.symphony.bdk.workflow.swadl.v1.activity.OboActivity;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
-import javax.annotation.Nullable;
 
 /**
  * @see <a href="https://developers.symphony.com/restapi/reference#list-connections">List Connections API</a>

@@ -85,9 +85,9 @@ class ActivityCmdaApiQueryRepositoryTest {
         new WorkflowInstLifeCycleFilter(null, null, null, null));
 
     assertThat(result).hasSize(2);
-    assertThat(result.get(0).getId()).isEqualTo("id1");
-    assertThat(result.get(0).getName()).isEqualTo("instance1");
-    assertThat(result.get(0).getVariables().getOutputs()).hasSize(1);
+    assertThat(result.getFirst().getId()).isEqualTo("id1");
+    assertThat(result.getFirst().getName()).isEqualTo("instance1");
+    assertThat(result.getFirst().getVariables().getOutputs()).hasSize(1);
   }
 
   @Test
@@ -112,8 +112,8 @@ class ActivityCmdaApiQueryRepositoryTest {
     List<ActivityInstanceDomain> result = queryRepository.findAllByWorkflowInstanceId("wf", "inst",
         new WorkflowInstLifeCycleFilter(null, null, null, null));
     assertThat(result).hasSize(2);
-    assertThat(result.get(0).getId()).isEqualTo("id1");
-    assertThat(result.get(0).getName()).isEqualTo("instance1");
-    assertThat(result.get(0).getVariables().getOutputs()).isEmpty();
+    assertThat(result.getFirst().getId()).isEqualTo("id1");
+    assertThat(result.getFirst().getName()).isEqualTo("instance1");
+    assertThat(result.getFirst().getVariables().getOutputs()).isEmpty();
   }
 }

@@ -4,12 +4,12 @@ import com.symphony.bdk.workflow.swadl.v1.EventWithTimeout;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import lombok.Data;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 /**
  * Base implementation of an activity providing data shared across all activities.

@@ -4,12 +4,12 @@ import com.symphony.bdk.workflow.swadl.v1.activity.OboActivity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Nullable;
 
 /**
  * @see <a href="https://developers.symphony.com/restapi/reference#create-room-v3">Create room API</a>

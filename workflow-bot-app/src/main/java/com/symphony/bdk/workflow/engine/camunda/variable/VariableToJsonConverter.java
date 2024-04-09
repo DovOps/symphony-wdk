@@ -22,11 +22,11 @@ public class VariableToJsonConverter extends TypeConverterImpl {
     if (value == null) {
       return "";
     }
-    if (value instanceof String) {
-      return (String) value;
+    if (value instanceof String string) {
+      return string;
     }
-    if (value instanceof Enum<?>) {
-      return ((Enum<?>) value).name();
+    if (value instanceof Enum<?> enum1) {
+      return enum1.name();
     }
     try {
       // the entire activity is serialized as JSON already, so we serialize the variable resolved value as escaped JSON.

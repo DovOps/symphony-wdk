@@ -60,7 +60,7 @@ public class SendMessageExecutor extends OboExecutor<SendMessage, V4Message> imp
 
     if (streamIds.isEmpty()) {
       throw new IllegalArgumentException(
-          String.format("No stream/user ids set to send a message in activity %s", activity.getId()));
+          "No stream/user ids set to send a message in activity %s".formatted(activity.getId()));
 
     } else if (isObo(activity) && activity.getObo() != null && streamIds.size() == 1) {
       message = this.doOboWithCache(execution);
@@ -68,19 +68,19 @@ public class SendMessageExecutor extends OboExecutor<SendMessage, V4Message> imp
     } else if (isObo(activity) && streamIds.size() > 1) {
       // TODO: Add blast message obo case when it is enabled: https://perzoinc.atlassian.net/browse/PLAT-11231
       throw new IllegalArgumentException(
-          String.format("Blast message, in activity %s, is not OBO enabled", activity.getId()));
+          "Blast message, in activity %s, is not OBO enabled".formatted(activity.getId()));
 
     } else if (streamIds.size() == 1) {
-      message = execution.bdk().messages().send(streamIds.get(0), messageToSend);
+      message = execution.bdk().messages().send(streamIds.getFirst(), messageToSend);
 
     } else {
       V4MessageBlastResponse response = execution.bdk().messages().send(streamIds, messageToSend);
 
       if (response.getMessages() != null && !response.getMessages().isEmpty()) {
-        message = response.getMessages().get(0); // for backward compatibility, we keep storing the first message
+        message = response.getMessages().getFirst(); // for backward compatibility, we keep storing the first message
         messages.addAll(response.getMessages());
       } else {
-        throw new RuntimeException(String.format("All messages have failed in activity %s", activity.getId()));
+        throw new RuntimeException("All messages have failed in activity %s".formatted(activity.getId()));
       }
 
       if (response.getErrors() != null) {
@@ -112,10 +112,10 @@ public class SendMessageExecutor extends OboExecutor<SendMessage, V4Message> imp
 
     if (streamIds.isEmpty()) {
       throw new IllegalArgumentException(
-          String.format("No stream ids set to send a message in activity %s", activity.getId()));
+          "No stream ids set to send a message in activity %s".formatted(activity.getId()));
     }
 
-    String streamId = streamIds.get(0);
+    String streamId = streamIds.getFirst();
     Message messageToSend = this.buildMessage(execution);
     AuthSession authSession = this.getOboAuthSession(execution);
 
@@ -146,7 +146,7 @@ public class SendMessageExecutor extends OboExecutor<SendMessage, V4Message> imp
       return singletonList(event.getStream().getStreamId());
     } else {
       throw new IllegalArgumentException(
-          String.format("No stream id set to send a message in activity %s", activity.getId()));
+          "No stream id set to send a message in activity %s".formatted(activity.getId()));
     }
   }
 
@@ -207,14 +207,14 @@ public class SendMessageExecutor extends OboExecutor<SendMessage, V4Message> imp
       V4Message actualMessage = messages.getMessage(attachment.getMessageId());
 
       if (actualMessage == null) {
-        throw new IllegalArgumentException(String.format("Message with id %s not found", attachment.getMessageId()));
+        throw new IllegalArgumentException("Message with id %s not found".formatted(attachment.getMessageId()));
       }
 
       if (attachment.getAttachmentId() != null) {
         // send the provided attachment only
         if (actualMessage.getAttachments() == null) {
           throw new IllegalStateException(
-              String.format("No attachment in requested message with id %s", actualMessage.getMessageId()));
+              "No attachment in requested message with id %s".formatted(actualMessage.getMessageId()));
         }
 
         V4AttachmentInfo attachmentInfo = actualMessage.getAttachments()
@@ -222,8 +222,8 @@ public class SendMessageExecutor extends OboExecutor<SendMessage, V4Message> imp
             .filter(a -> a.getId().equals(attachment.getAttachmentId()))
             .findFirst()
             .orElseThrow(() -> new IllegalStateException(
-                String.format("No attachment with id %s found in message with id %s",
-                    attachment.getAttachmentId(), attachment.getMessageId())));
+            "No attachment with id %s found in message with id %s".formatted(
+                attachment.getAttachmentId(), attachment.getMessageId())));
 
         downloadAndAddAttachment(messageBuilder, actualMessage, attachmentInfo, messages);
       } else if (actualMessage.getAttachments() != null) {

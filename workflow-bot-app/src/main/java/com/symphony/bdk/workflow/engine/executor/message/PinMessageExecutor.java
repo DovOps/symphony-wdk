@@ -32,7 +32,7 @@ public class PinMessageExecutor extends OboExecutor<PinMessage, Void>
 
     if (IM.equals(streamType) && this.isObo(activity)) {
       throw new IllegalArgumentException(
-          String.format("Pin instant message, in activity %s, is not OBO enabled", activity.getId()));
+          "Pin instant message, in activity %s, is not OBO enabled".formatted(activity.getId()));
     } else if (IM.equals(streamType)) {
       this.updateInstantMessage(execution, messageId, streamId);
     } else if (ROOM.equals(streamType) && this.isObo(activity)) {
@@ -41,7 +41,7 @@ public class PinMessageExecutor extends OboExecutor<PinMessage, Void>
       this.updateRoomMessage(execution, messageId, streamId);
     } else {
       throw new IllegalArgumentException(
-          String.format("Unable to pin message in stream type %s in activity %s", streamType,
+          "Unable to pin message in stream type %s in activity %s".formatted(streamType,
               execution.getActivity().getId()));
     }
   }

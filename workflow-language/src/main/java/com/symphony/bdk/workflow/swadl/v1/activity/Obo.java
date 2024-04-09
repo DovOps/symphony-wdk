@@ -1,9 +1,8 @@
 package com.symphony.bdk.workflow.swadl.v1.activity;
 
+import jakarta.annotation.Nullable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import javax.annotation.Nullable;
 
 @EqualsAndHashCode
 @Data

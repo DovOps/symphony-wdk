@@ -31,13 +31,13 @@ class CustomActivityIntegrationTest extends IntegrationTest {
         .header("X-Monitoring-Token", "MONITORING_TOKEN_VALUE")
         .contentType(ContentType.JSON)
         .when()
-        .get(String.format("/wdk/v1/workflows/%s/nodes", "custom-activity"))
+        .get("/wdk/v1/workflows/%s/nodes".formatted("custom-activity"))
         .thenReturn();
 
     // actual flow nodes
     List<Object> flowNodes = response.body().jsonPath().getList("flowNodes");
-    assertThat(((LinkedHashMap) flowNodes.get(0)).get("type")).isEqualTo("DO_SOMETHING");
-    assertThat(((LinkedHashMap) flowNodes.get(0)).get("group")).isEqualTo("ACTIVITY");
+    assertThat(((LinkedHashMap) flowNodes.getFirst()).get("type")).isEqualTo("DO_SOMETHING");
+    assertThat(((LinkedHashMap) flowNodes.getFirst()).get("group")).isEqualTo("ACTIVITY");
   }
 
 }

@@ -23,39 +23,45 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressFBWarnings(value = {"NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"},
     justification = "A NP should make the test fail")
 class WorkflowsMgtApiIntegrationTest extends ApiIntegrationTest {
-  private static final String VALID_SWADL_V1 = "id: dummy-workflow\n"
-      + "properties: \n"
-      + "  publish: false\n"
-      + "activities:\n"
-      + "  - execute-script:\n"
-      + "      id: script0\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: /dummy-workflow\n"
-      + "      script: |\n"
-      + "        messageService.send(\"123\", \"OK from V1\")";
+  private static final String VALID_SWADL_V1 = """
+      id: dummy-workflow
+      properties:\s
+        publish: false
+      activities:
+        - execute-script:
+            id: script0
+            on:
+              message-received:
+                content: /dummy-workflow
+            script: |
+              messageService.send("123", "OK from V1")\
+      """;
 
-  private static final String VALID_SWADL_V2 = "id: dummy-workflow\n"
-      + "activities:\n"
-      + "  - execute-script:\n"
-      + "      id: v2Script0\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: /dummy-workflow\n"
-      + "      script: |\n"
-      + "        messageService.send(\"123\", \"OK from V2\")";
+  private static final String VALID_SWADL_V2 = """
+      id: dummy-workflow
+      activities:
+        - execute-script:
+            id: v2Script0
+            on:
+              message-received:
+                content: /dummy-workflow
+            script: |
+              messageService.send("123", "OK from V2")\
+      """;
 
-  private static final String UPDATED_VALID_SWADL_V1 = "id: dummy-workflow\n"
-      + "properties: \n"
-      + "  publish: true\n"
-      + "activities:\n"
-      + "  - execute-script:\n"
-      + "      id: updated\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: /dummy-workflow\n"
-      + "      script: |\n"
-      + "        messageService.send(\"123\", \"OK from V1\")";
+  private static final String UPDATED_VALID_SWADL_V1 = """
+      id: dummy-workflow
+      properties:\s
+        publish: true
+      activities:
+        - execute-script:
+            id: updated
+            on:
+              message-received:
+                content: /dummy-workflow
+            script: |
+              messageService.send("123", "OK from V1")\
+      """;
 
   private static Long versionToRollback = -1L;
 
@@ -71,7 +77,7 @@ class WorkflowsMgtApiIntegrationTest extends ApiIntegrationTest {
     ResponseEntity<List<Pair<String, Boolean>>> getSwadlResponse = getSwadlById("dummy-workflow", true);
     assertThat(getSwadlResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(getSwadlResponse.getBody()).hasSize(1);
-    assertThat(getSwadlResponse.getBody().get(0)).isEqualTo(Pair.of(VALID_SWADL_V1, false));
+    assertThat(getSwadlResponse.getBody().getFirst()).isEqualTo(Pair.of(VALID_SWADL_V1, false));
   }
 
   @Test
@@ -86,7 +92,7 @@ class WorkflowsMgtApiIntegrationTest extends ApiIntegrationTest {
     ResponseEntity<List<Pair<String, Boolean>>> getSwadlResponse = getSwadlById("dummy-workflow");
     assertThat(getSwadlResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(getSwadlResponse.getBody()).hasSize(1);
-    assertThat(getSwadlResponse.getBody().get(0)).isEqualTo(Pair.of(UPDATED_VALID_SWADL_V1, true));
+    assertThat(getSwadlResponse.getBody().getFirst()).isEqualTo(Pair.of(UPDATED_VALID_SWADL_V1, true));
   }
 
   @Test
@@ -95,7 +101,7 @@ class WorkflowsMgtApiIntegrationTest extends ApiIntegrationTest {
     // store the workflow version id
     ResponseEntity<List<WorkflowView>> allWorkflows = listAllWorkflows();
     assertThat(allWorkflows.getBody()).hasSize(1);
-    versionToRollback = allWorkflows.getBody().get(0).getVersion();
+    versionToRollback = allWorkflows.getBody().getFirst().getVersion();
 
     // save a new version of the workflow
     ResponseEntity<Void> voidResponse = saveAndDeploy(VALID_SWADL_V2, "dummy workflow v2");
@@ -174,19 +180,19 @@ class WorkflowsMgtApiIntegrationTest extends ApiIntegrationTest {
           return execution.execute(request, body);
         }));
 
-    restTemplate.postForEntity(String.format(SECRET_URL, port), new SecretView("key", "secret".toCharArray()),
+    restTemplate.postForEntity(SECRET_URL.formatted(port), new SecretView("key", "secret".toCharArray()),
         Void.class);
 
     ResponseEntity<SecretKeeper.SecretMetadata[]> response =
-        restTemplate.getForEntity(String.format(SECRET_URL, port), SecretKeeper.SecretMetadata[].class);
+        restTemplate.getForEntity(SECRET_URL.formatted(port), SecretKeeper.SecretMetadata[].class);
     SecretKeeper.SecretMetadata[] metadata = response.getBody();
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(metadata).hasSize(1);
     assertThat(metadata[0].getSecretKey()).isEqualTo("key");
     assertThat(metadata[0].getCreatedAt()).isNotNull();
 
-    restTemplate.delete(String.format(SECRET_URL, port) + "/key");
-    response = restTemplate.getForEntity(String.format(SECRET_URL, port), SecretKeeper.SecretMetadata[].class);
+    restTemplate.delete(SECRET_URL.formatted(port) + "/key");
+    response = restTemplate.getForEntity(SECRET_URL.formatted(port), SecretKeeper.SecretMetadata[].class);
     metadata = response.getBody();
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(metadata).hasSize(0);
@@ -201,12 +207,12 @@ class WorkflowsMgtApiIntegrationTest extends ApiIntegrationTest {
         }));
 
     ResponseEntity<Void> postResponse =
-        restTemplate.postForEntity(String.format(SECRET_URL, port), new SecretView("key", "secret".toCharArray()),
+        restTemplate.postForEntity(SECRET_URL.formatted(port), new SecretView("key", "secret".toCharArray()),
             Void.class);
     assertThat(postResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
 
     ResponseEntity<Object> getResponse =
-        restTemplate.getForEntity(URI.create(String.format(SECRET_URL, port)), Object.class);
+        restTemplate.getForEntity(URI.create(SECRET_URL.formatted(port)), Object.class);
     assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
   }
 

@@ -88,7 +88,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
       MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
     Map<String, String> errors =
         ex.getBindingResult().getFieldErrors().stream().collect(Collectors.toMap(FieldError::getField,
-            FieldError::getDefaultMessage, (x, y) -> String.format("%s%n%s", x, y)));
+            FieldError::getDefaultMessage, (x, y) -> "%s%n%s".formatted(x, y)));
     return handleExceptionInternal(ex, errors, headers, status, request);
   }
 }

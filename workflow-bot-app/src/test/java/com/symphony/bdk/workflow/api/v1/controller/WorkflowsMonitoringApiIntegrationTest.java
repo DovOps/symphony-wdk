@@ -19,33 +19,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "A NP should make the test fail")
 public class WorkflowsMonitoringApiIntegrationTest extends ApiIntegrationTest {
-  private static final String VALID_SWADL_1 = "id: valid-dummy-workflow-1\n"
-      + "activities:\n"
-      + "  - send-message: \n"
-      + "      id: script0\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: /valid-dummy-workflow-1\n"
-      + "      content: Started\n"
-      + "      to: \n"
-      + "        stream-id: \"123\"\n"
-      + "  - execute-script:\n"
-      + "      id: script1\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: /continue\n"
-      + "      script: |\n";
+  private static final String VALID_SWADL_1 = """
+      id: valid-dummy-workflow-1
+      activities:
+        - send-message:\s
+            id: script0
+            on:
+              message-received:
+                content: /valid-dummy-workflow-1
+            content: Started
+            to:\s
+              stream-id: "123"
+        - execute-script:
+            id: script1
+            on:
+              message-received:
+                content: /continue
+            script: |
+      """;
 
-  private static final String VALID_SWADL_2 = "id: valid-dummy-workflow-2\n"
-      + "activities:\n"
-      + "  - send-message: \n"
-      + "      id: script0\n"
-      + "      on:\n"
-      + "        message-received:\n"
-      + "          content: /valid-dummy-workflow-2\n"
-      + "      content: OK\n"
-      + "      to: \n"
-      + "        stream-id: \"123\"";
+  private static final String VALID_SWADL_2 = """
+      id: valid-dummy-workflow-2
+      activities:
+        - send-message:\s
+            id: script0
+            on:
+              message-received:
+                content: /valid-dummy-workflow-2
+            content: OK
+            to:\s
+              stream-id: "123"\
+      """;
 
   @Test
   @Order(1)

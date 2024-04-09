@@ -59,7 +59,7 @@ public class UpdateRoomExecutor extends OboExecutor<UpdateRoom, V3RoomDetail> im
 
     if (updateRoom.getActive() != null) {
       throw new IllegalArgumentException(
-          String.format("Room active status update, in activity %s, is not OBO enabled", updateRoom.getId()));
+          "Room active status update, in activity %s, is not OBO enabled".formatted(updateRoom.getId()));
     }
 
     return execution.bdk().obo(authSession).streams().getRoomInfo(updateRoom.getStreamId());

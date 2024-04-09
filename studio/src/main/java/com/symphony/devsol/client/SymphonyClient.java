@@ -44,7 +44,7 @@ public class SymphonyClient {
   }
 
   @GetMapping("symphony/profile")
-  public Profile getProfile(@RequestAttribute("user") UserClaim user) {
+  public Profile getProfile(@RequestAttribute UserClaim user) {
     return new Profile(admins.contains(user.getId()));
   }
 
@@ -55,7 +55,7 @@ public class SymphonyClient {
     if (userList.isEmpty()) {
       throw new ResponseStatusException(NOT_FOUND, "No such user");
     }
-    UserV2 user = userList.get(0);
+    UserV2 user = userList.getFirst();
     return new SimpleUser(user.getId(), user.getDisplayName());
   }
 

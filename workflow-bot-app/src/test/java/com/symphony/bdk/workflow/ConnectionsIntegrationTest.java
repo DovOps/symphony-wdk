@@ -28,8 +28,10 @@ class ConnectionsIntegrationTest extends IntegrationTest {
 
   @Test
   @DisplayName(
-      "Given a user and a connection status, when the workflow is triggered,"
-          + "then all connections having this status are returned")
+      """
+      Given a user and a connection status, when the workflow is triggered,\
+      then all connections having this status are returned\
+      """)
   void listConnections() throws IOException, ProcessingException {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream("/connection/get-connections.swadl.yaml"));
@@ -46,7 +48,7 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(connectionService, timeout(5000)).listConnections(ConnectionStatus.ACCEPTED, userIds);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_CONNECTIONS_KEY, "getConnections"), userConnections);
+        .hasOutput(OUTPUTS_CONNECTIONS_KEY.formatted("getConnections"), userConnections);
   }
 
   @Test
@@ -65,15 +67,19 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(connectionService, timeout(5000)).listConnections(null, null);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_CONNECTIONS_KEY, "getConnections"), userConnections);
+        .hasOutput(OUTPUTS_CONNECTIONS_KEY.formatted("getConnections"), userConnections);
   }
 
   @ParameterizedTest
   @CsvSource({
-    "/connection/obo/get-connections-obo-valid-username.swadl.yaml, /get-connections-obo-valid-username, "
-      + "getConnectionsOboValidUsername",
-    "/connection/obo/get-connections-obo-valid-userid.swadl.yaml, /get-connections-obo-valid-userid, "
-      + "getConnectionsOboValidUserid"
+    """
+    /connection/obo/get-connections-obo-valid-username.swadl.yaml, /get-connections-obo-valid-username, \
+    getConnectionsOboValidUsername\
+    """,
+    """
+    /connection/obo/get-connections-obo-valid-userid.swadl.yaml, /get-connections-obo-valid-userid, \
+    getConnectionsOboValidUserid\
+    """
   })
   void listConnectionsStatusObo(String workflowFile, String command, String output) throws Exception {
     final Workflow workflow =
@@ -93,7 +99,7 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(oboConnectionService, timeout(5000)).listConnections(ConnectionStatus.ACCEPTED, userIds);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUTS_CONNECTIONS_KEY, output), userConnections);
+        .hasOutput(OUTPUTS_CONNECTIONS_KEY.formatted(output), userConnections);
   }
 
   @Test
@@ -126,15 +132,19 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(connectionService, timeout(5000)).getConnection(userId);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUT_CONNECTION_KEY, "getConnection"), userConnection);
+        .hasOutput(OUTPUT_CONNECTION_KEY.formatted("getConnection"), userConnection);
   }
 
   @ParameterizedTest
   @CsvSource({
-    "/connection/obo/get-connection-obo-valid-username.swadl.yaml, /get-connection-obo-valid-username, "
-      + "getConnectionOboValidUsername",
-    "/connection/obo/get-connection-obo-valid-userid.swadl.yaml, /get-connection-obo-valid-userid, "
-      + "getConnectionOboValidUserid"
+    """
+    /connection/obo/get-connection-obo-valid-username.swadl.yaml, /get-connection-obo-valid-username, \
+    getConnectionOboValidUsername\
+    """,
+    """
+    /connection/obo/get-connection-obo-valid-userid.swadl.yaml, /get-connection-obo-valid-userid, \
+    getConnectionOboValidUserid\
+    """
   })
   void getConnectionStatusObo(String workflowFile, String command, String output) throws Exception {
     final Workflow workflow =
@@ -153,7 +163,7 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(oboConnectionService, timeout(5000)).getConnection(userId);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUT_CONNECTION_KEY, output), userConnection);
+        .hasOutput(OUTPUT_CONNECTION_KEY.formatted(output), userConnection);
   }
 
   @Test
@@ -187,15 +197,19 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(connectionService, timeout(5000)).createConnection(userId);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUT_CONNECTION_KEY, "createConnection"), userConnection);
+        .hasOutput(OUTPUT_CONNECTION_KEY.formatted("createConnection"), userConnection);
   }
 
   @ParameterizedTest
   @CsvSource({
-    "/connection/obo/create-connection-obo-valid-username.swadl.yaml, /create-connection-obo-valid-username, "
-      + "createConnectionOboValidUsername",
-    "/connection/obo/create-connection-obo-valid-userid.swadl.yaml, /create-connection-obo-valid-userid, "
-      + "createConnectionOboValidUserid"
+    """
+    /connection/obo/create-connection-obo-valid-username.swadl.yaml, /create-connection-obo-valid-username, \
+    createConnectionOboValidUsername\
+    """,
+    """
+    /connection/obo/create-connection-obo-valid-userid.swadl.yaml, /create-connection-obo-valid-userid, \
+    createConnectionOboValidUserid\
+    """
   })
   void createConnectionObo(String workflowFile, String command, String outputName) throws Exception {
     final Workflow workflow =
@@ -213,7 +227,7 @@ class ConnectionsIntegrationTest extends IntegrationTest {
 
     verify(oboConnectionService, timeout(5000)).createConnection(userId);
 
-    assertThat(workflow).isExecuted().hasOutput(String.format(OUTPUT_CONNECTION_KEY, outputName), userConnection);
+    assertThat(workflow).isExecuted().hasOutput(OUTPUT_CONNECTION_KEY.formatted(outputName), userConnection);
   }
 
   @Test
@@ -232,8 +246,10 @@ class ConnectionsIntegrationTest extends IntegrationTest {
 
   @Test
   @DisplayName(
-      "Given an incoming connection request from a user, when the workflow is triggered,"
-          + "then the connection is accepted")
+      """
+      Given an incoming connection request from a user, when the workflow is triggered,\
+      then the connection is accepted\
+      """)
   void acceptConnectionStatus() throws IOException, ProcessingException {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream("/connection/accept-connection.swadl.yaml"));
@@ -249,15 +265,19 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(connectionService, timeout(5000)).acceptConnection(userId);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUT_CONNECTION_KEY, "acceptConnection"), userConnection);
+        .hasOutput(OUTPUT_CONNECTION_KEY.formatted("acceptConnection"), userConnection);
   }
 
   @ParameterizedTest
   @CsvSource({
-    "/connection/obo/accept-connection-obo-valid-username.swadl.yaml, /accept-connection-obo-valid-username, "
-      + "acceptConnectionOboValidUsername",
-    "/connection/obo/accept-connection-obo-valid-userid.swadl.yaml, /accept-connection-obo-valid-userid, "
-      + "acceptConnectionOboValidUserid"
+    """
+    /connection/obo/accept-connection-obo-valid-username.swadl.yaml, /accept-connection-obo-valid-username, \
+    acceptConnectionOboValidUsername\
+    """,
+    """
+    /connection/obo/accept-connection-obo-valid-userid.swadl.yaml, /accept-connection-obo-valid-userid, \
+    acceptConnectionOboValidUserid\
+    """
   })
   void acceptConnectionStatusObo(String workflowFile, String command, String output) throws Exception {
     final Workflow workflow =
@@ -275,7 +295,7 @@ class ConnectionsIntegrationTest extends IntegrationTest {
 
     verify(oboConnectionService, timeout(5000)).acceptConnection(userId);
 
-    assertThat(workflow).isExecuted().hasOutput(String.format(OUTPUT_CONNECTION_KEY, output), userConnection);
+    assertThat(workflow).isExecuted().hasOutput(OUTPUT_CONNECTION_KEY.formatted(output), userConnection);
   }
 
   @Test
@@ -294,8 +314,10 @@ class ConnectionsIntegrationTest extends IntegrationTest {
 
   @Test
   @DisplayName(
-      "Given an incoming connection request from a user, when the workflow is triggered,"
-          + "then the connection is rejected")
+      """
+      Given an incoming connection request from a user, when the workflow is triggered,\
+      then the connection is rejected\
+      """)
   void rejectConnectionStatus() throws IOException, ProcessingException {
     final Workflow workflow =
         SwadlParser.fromYaml(getClass().getResourceAsStream("/connection/reject-connection.swadl.yaml"));
@@ -311,15 +333,19 @@ class ConnectionsIntegrationTest extends IntegrationTest {
     verify(connectionService, timeout(5000)).rejectConnection(userId);
 
     assertThat(workflow).isExecuted()
-        .hasOutput(String.format(OUTPUT_CONNECTION_KEY, "rejectConnection"), userConnection);
+        .hasOutput(OUTPUT_CONNECTION_KEY.formatted("rejectConnection"), userConnection);
   }
 
   @ParameterizedTest
   @CsvSource({
-    "/connection/obo/reject-connection-obo-valid-username.swadl.yaml, /reject-connection-obo-valid-username, "
-      + "rejectConnectionOboValidUsername",
-    "/connection/obo/reject-connection-obo-valid-userid.swadl.yaml, /reject-connection-obo-valid-userid, "
-      + "rejectConnectionOboValidUserid"
+    """
+    /connection/obo/reject-connection-obo-valid-username.swadl.yaml, /reject-connection-obo-valid-username, \
+    rejectConnectionOboValidUsername\
+    """,
+    """
+    /connection/obo/reject-connection-obo-valid-userid.swadl.yaml, /reject-connection-obo-valid-userid, \
+    rejectConnectionOboValidUserid\
+    """
   })
   void rejectConnectionStatusObo(String workflowFile, String command, String output) throws Exception {
     final Workflow workflow =
@@ -337,7 +363,7 @@ class ConnectionsIntegrationTest extends IntegrationTest {
 
     verify(oboConnectionService, timeout(5000)).rejectConnection(userId);
 
-    assertThat(workflow).isExecuted().hasOutput(String.format(OUTPUT_CONNECTION_KEY, output), userConnection);
+    assertThat(workflow).isExecuted().hasOutput(OUTPUT_CONNECTION_KEY.formatted(output), userConnection);
   }
 
   @Test

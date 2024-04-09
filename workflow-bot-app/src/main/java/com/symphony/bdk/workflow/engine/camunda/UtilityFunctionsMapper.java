@@ -131,8 +131,8 @@ public class UtilityFunctionsMapper extends FunctionMapper {
 
   @SuppressWarnings("rawtypes")
   public static List<Long> mentions(Object event) throws MessageParserException {
-    if (event instanceof EventHolder && ((EventHolder) event).getSource() instanceof V4MessageSent) {
-      return MessageParser.getMentions(((V4MessageSent) ((EventHolder) event).getSource()).getMessage());
+    if (event instanceof EventHolder holder && holder.getSource() instanceof V4MessageSent) {
+      return MessageParser.getMentions(((V4MessageSent) holder.getSource()).getMessage());
     } else {
       return Collections.emptyList();
     }
@@ -140,8 +140,8 @@ public class UtilityFunctionsMapper extends FunctionMapper {
 
   @SuppressWarnings("rawtypes")
   public static List<String> hashTags(Object event) throws MessageParserException {
-    if (event instanceof EventHolder && ((EventHolder) event).getSource() instanceof V4MessageSent) {
-      return MessageParser.getHashtags(((V4MessageSent) ((EventHolder) event).getSource()).getMessage());
+    if (event instanceof EventHolder holder && holder.getSource() instanceof V4MessageSent) {
+      return MessageParser.getHashtags(((V4MessageSent) holder.getSource()).getMessage());
     } else {
       return Collections.emptyList();
     }
@@ -149,8 +149,8 @@ public class UtilityFunctionsMapper extends FunctionMapper {
 
   @SuppressWarnings("rawtypes")
   public static List<String> cashTags(Object event) throws MessageParserException {
-    if (event instanceof EventHolder && ((EventHolder) event).getSource() instanceof V4MessageSent) {
-      return MessageParser.getCashtags(((V4MessageSent) ((EventHolder) event).getSource()).getMessage());
+    if (event instanceof EventHolder holder && holder.getSource() instanceof V4MessageSent) {
+      return MessageParser.getCashtags(((V4MessageSent) holder.getSource()).getMessage());
     } else {
       return Collections.emptyList();
     }
@@ -158,8 +158,8 @@ public class UtilityFunctionsMapper extends FunctionMapper {
 
   @SuppressWarnings("rawtypes")
   public static Map<String, String> emojis(Object event) throws MessageParserException {
-    if (event instanceof EventHolder && ((EventHolder) event).getSource() instanceof V4MessageSent) {
-      return MessageParser.getEmojis(((V4MessageSent) ((EventHolder) event).getSource()).getMessage());
+    if (event instanceof EventHolder holder && holder.getSource() instanceof V4MessageSent) {
+      return MessageParser.getEmojis(((V4MessageSent) holder.getSource()).getMessage());
     } else {
       return Collections.emptyMap();
     }

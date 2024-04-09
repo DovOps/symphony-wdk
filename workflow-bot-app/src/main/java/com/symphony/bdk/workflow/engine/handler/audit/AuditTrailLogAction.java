@@ -23,17 +23,17 @@ import java.util.List;
 public class AuditTrailLogAction implements HistoricEventAction {
   @Override
   public void execute(HistoryEvent historyEvent) {
-    if (historyEvent instanceof HistoricJobLogEvent) {
-      logJobEvent((HistoricJobLogEvent) historyEvent);
+    if (historyEvent instanceof HistoricJobLogEvent event) {
+      logJobEvent(event);
 
-    } else if (historyEvent instanceof HistoricProcessInstanceEventEntity) {
-      logProcessEvent((HistoricProcessInstanceEventEntity) historyEvent);
+    } else if (historyEvent instanceof HistoricProcessInstanceEventEntity entity) {
+      logProcessEvent(entity);
 
-    } else if (historyEvent instanceof HistoricActivityInstanceEventEntity) {
-      logActivityEvent((HistoricActivityInstanceEventEntity) historyEvent);
+    } else if (historyEvent instanceof HistoricActivityInstanceEventEntity entity) {
+      logActivityEvent(entity);
 
-    } else if (historyEvent instanceof HistoricVariableUpdateEventEntity) {
-      logVariableEvent((HistoricVariableUpdateEventEntity) historyEvent);
+    } else if (historyEvent instanceof HistoricVariableUpdateEventEntity entity) {
+      logVariableEvent(entity);
 
     } else {
       log.trace("Event {}", historyEvent);
@@ -105,12 +105,12 @@ public class AuditTrailLogAction implements HistoricEventAction {
 
   @SuppressWarnings("rawtypes")
   private String getProcessKey(Deployment deployment) {
-    if (deployment instanceof DeploymentEntity) {
-      List artifacts = ((DeploymentEntity) deployment).getDeployedArtifacts().get(ProcessDefinitionEntity.class);
+    if (deployment instanceof DeploymentEntity entity) {
+      List artifacts = entity.getDeployedArtifacts().get(ProcessDefinitionEntity.class);
       if (artifacts != null
           && !artifacts.isEmpty()
-          && artifacts.get(0) instanceof ProcessDefinitionEntity) {
-        ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) artifacts.get(0);
+          && artifacts.getFirst() instanceof ProcessDefinitionEntity) {
+        ProcessDefinitionEntity processDefinition = (ProcessDefinitionEntity) artifacts.getFirst();
         return processDefinition.getKey();
       }
     }

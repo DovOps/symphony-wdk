@@ -68,7 +68,7 @@ public class V4ElementActionEventProcessor extends AbstractRealTimeEventProcesso
    */
   private Optional<String> getProcessToExecute(String formId, String messageId) {
     return runtimeService.createVariableInstanceQuery()
-        .variableName(String.format("%s.%s.%s", formId, ActivityExecutorContext.OUTPUTS,
+        .variableName("%s.%s.%s".formatted(formId, ActivityExecutorContext.OUTPUTS,
             SendMessageExecutor.OUTPUT_MESSAGE_IDS_KEY))
         .list()
         .stream()

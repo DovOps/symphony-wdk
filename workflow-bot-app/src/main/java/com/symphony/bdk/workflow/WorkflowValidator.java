@@ -15,9 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 public class WorkflowValidator {
 
   public static void validateFirstActivity(BaseActivity activity, Event event, String workflowId) {
-    if (event instanceof EventWithTimeout && StringUtils.isNotEmpty(((EventWithTimeout) event).getTimeout())) {
+    if (event instanceof EventWithTimeout timeout && StringUtils.isNotEmpty(timeout.getTimeout())) {
       throw new InvalidActivityException(workflowId,
-          String.format("Workflow's starting activity %s must not have timeout", activity.getId()));
+          "Workflow's starting activity %s must not have timeout".formatted(activity.getId()));
     }
     // the given event might be a event from oneOf list, if so the following checked activities are acceptable.
     // here we want to forbidden having these activities from "on" section only
@@ -26,7 +26,7 @@ public class WorkflowValidator {
         || eventWithTimeout.getActivityFailed() != null
         || eventWithTimeout.getActivityExpired() != null)) {
       throw new InvalidActivityException(workflowId,
-          String.format("Workflow's starting activity %s must not be dependent on other activities",
+          "Workflow's starting activity %s must not be dependent on other activities".formatted(
               activity.getId()));
     }
   }
@@ -36,7 +36,7 @@ public class WorkflowValidator {
         .noneMatch(a -> a.getActivity().getId().equals(currentNodeId));
     if (activityUnknown) {
       throw new NotFoundException(
-          String.format("Invalid activity in the workflow %s: No activity found with id %s referenced in %s",
+          "Invalid activity in the workflow %s: No activity found with id %s referenced in %s".formatted(
               workflow.getId(),
               currentNodeId, activityId));
     }
@@ -46,7 +46,7 @@ public class WorkflowValidator {
       WorkflowDirectedGraph graph) {
     if (!graph.hasSeenBefore(currentNodeId)) {
       throw new NotFoundException(
-          String.format("Invalid activity in the workflow %s: No activity found with id %s referenced in %s",
+          "Invalid activity in the workflow %s: No activity found with id %s referenced in %s".formatted(
               workflowId,
               currentNodeId, activityId));
     }
